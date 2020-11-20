@@ -14,7 +14,7 @@ namespace BloodBankCodeFirstFromDB
         public float DonationBloodVolume { get; set; }
 
         [Required]
-        [StringLength(100)]
+        [StringLength(300)]
         public string MedicalReport { get; set; }
 
         public int BloodTypeId { get; set; }

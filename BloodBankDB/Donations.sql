@@ -2,7 +2,7 @@
 (
  [DonationId]          int NOT NULL ,
  [DonationBloodVolume] real NOT NULL ,
- [MedicalReport]       nvarchar(100) NOT NULL ,
+ [MedicalReport]       nvarchar(300) NOT NULL ,
  [BloodTypeId]         int NOT NULL ,
  [DonorId]             int NOT NULL ,
  [DonationDate]        datetime NOT NULL ,
