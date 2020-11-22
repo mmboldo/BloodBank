@@ -64,6 +64,9 @@
     </Compile>
     <Compile Include="BloodBankProgramApp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="BloodBankAppMainForm.resx">
+      <DependentUpon>BloodBankAppMainForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -95,6 +98,10 @@
     <ProjectReference Include="..\BloodBankDB\BloodBankDB.sqlproj">
       <Project>{d4efc28e-4bc3-4454-8454-b92a6fbc049a}</Project>
       <Name>BloodBankDB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EFControllerUtilities\EFControllerUtilities.csproj">
+      <Project>{67164AAA-9E1A-469C-8667-22AFDFC3EF39}</Project>
+      <Name>EFControllerUtilities</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
