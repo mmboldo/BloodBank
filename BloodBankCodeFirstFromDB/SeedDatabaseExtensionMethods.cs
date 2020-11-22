@@ -79,6 +79,76 @@ namespace SeedDatabaseExtensions
             Dictionary<int, Client> clients = clientList.ToDictionary(x => x.ClientId, x => x);
             context.Clients.AddRange(clientList);
             context.SaveChanges();
+            List<BloodDeposit> bloodDepositList = new List<BloodDeposit>
+            {
+                new BloodDeposit{UnitId = 1, UnitPrice = Decimal.Parse(bloodTypes[1].PricePerUnit.ToString()) ,UnitExpiryDate = new DateTime(2021, 1, 19) , BloodTypeId = 1, BloodType = bloodTypes[1] },
+                new BloodDeposit{UnitId = 2, UnitPrice = Decimal.Parse(bloodTypes[3].PricePerUnit.ToString()) ,UnitExpiryDate = new DateTime(2021, 3, 5) , BloodTypeId = 3, BloodType = bloodTypes[3] },
+                new BloodDeposit{UnitId = 3, UnitPrice = Decimal.Parse(bloodTypes[5].PricePerUnit.ToString()) ,UnitExpiryDate = new DateTime(2021, 5, 13) , BloodTypeId = 5, BloodType = bloodTypes[5] },
+                new BloodDeposit{UnitId = 4, UnitPrice = Decimal.Parse(bloodTypes[4].PricePerUnit.ToString()) ,UnitExpiryDate = new DateTime(2021, 2, 14) , BloodTypeId = 4, BloodType = bloodTypes[4] },
+                new BloodDeposit{UnitId = 5, UnitPrice = Decimal.Parse(bloodTypes[6].PricePerUnit.ToString()) ,UnitExpiryDate = new DateTime(2021, 8, 31) , BloodTypeId = 6, BloodType = bloodTypes[6] },
+                new BloodDeposit{UnitId = 6, UnitPrice = Decimal.Parse(bloodTypes[7].PricePerUnit.ToString()) ,UnitExpiryDate = new DateTime(2021, 5, 17) , BloodTypeId = 7, BloodType = bloodTypes[7] },
+                new BloodDeposit{UnitId = 7, UnitPrice = Decimal.Parse(bloodTypes[2].PricePerUnit.ToString()) ,UnitExpiryDate = new DateTime(2021, 4, 29) , BloodTypeId = 2, BloodType = bloodTypes[2] },
+                new BloodDeposit{UnitId = 8, UnitPrice = Decimal.Parse(bloodTypes[8].PricePerUnit.ToString()) ,UnitExpiryDate = new DateTime(2021, 2, 9) , BloodTypeId = 8, BloodType = bloodTypes[8] },
+                new BloodDeposit{UnitId = 9, UnitPrice = Decimal.Parse(bloodTypes[6].PricePerUnit.ToString()) ,UnitExpiryDate = new DateTime(2021, 7, 1) , BloodTypeId = 6, BloodType = bloodTypes[6] },
+                new BloodDeposit{UnitId = 10, UnitPrice = Decimal.Parse(bloodTypes[2].PricePerUnit.ToString()) ,UnitExpiryDate = new DateTime(2021, 12, 13) , BloodTypeId = 2, BloodType = bloodTypes[2] },
+            };
+            Dictionary<int, BloodDeposit> bloodDeposits = bloodDepositList.ToDictionary(x => x.UnitId, x => x);
+            context.BloodDeposits.AddRange(bloodDepositList);
+            context.SaveChanges();
+
+            List<BloodWithdrawal> bloodWithdrawalList = new List<BloodWithdrawal>
+            {
+                new BloodWithdrawal{BloodWithdrawalId = 1, BloodWithdrawalDate = new DateTime(2019,12,23), TransactionValue = 300.00f, UnitQuantity = 1, ClientId = 1 },
+                new BloodWithdrawal{BloodWithdrawalId = 2, BloodWithdrawalDate = new DateTime(2020,2,23), TransactionValue = 450.00f, UnitQuantity = 1, ClientId = 3 },
+                new BloodWithdrawal{BloodWithdrawalId = 3, BloodWithdrawalDate = new DateTime(2018,3,13), TransactionValue = 500.00f, UnitQuantity = 1, ClientId = 6 },
+                new BloodWithdrawal{BloodWithdrawalId = 4, BloodWithdrawalDate = new DateTime(2020,6,4), TransactionValue = 400.00f, UnitQuantity = 1, ClientId = 4},
+                new BloodWithdrawal{BloodWithdrawalId = 5, BloodWithdrawalDate = new DateTime(2018,4,22), TransactionValue = 800.00f, UnitQuantity = 2, ClientId = 2 },
+                new BloodWithdrawal{BloodWithdrawalId = 6, BloodWithdrawalDate = new DateTime(2020,7,14), TransactionValue = 300.00f, UnitQuantity = 1, ClientId = 5 },
+                new BloodWithdrawal{BloodWithdrawalId = 7, BloodWithdrawalDate = new DateTime(2020,12,6), TransactionValue = 300.00f, UnitQuantity = 1, ClientId = 8 },
+                new BloodWithdrawal{BloodWithdrawalId = 8, BloodWithdrawalDate = new DateTime(2020,11,4), TransactionValue = 1000.00f, UnitQuantity = 2, ClientId = 10 },
+                new BloodWithdrawal{BloodWithdrawalId = 9, BloodWithdrawalDate = new DateTime(2019,1,31), TransactionValue = 450.00f, UnitQuantity = 1, ClientId = 7 },
+                new BloodWithdrawal{BloodWithdrawalId = 10, BloodWithdrawalDate = new DateTime(2020,5,2), TransactionValue = 500.00f, UnitQuantity = 1, ClientId = 6 },
+            };
+            Dictionary<int, BloodWithdrawal> bloodWithdrawals = bloodWithdrawalList.ToDictionary(x => x.BloodWithdrawalId, x => x);
+            context.BloodWithdrawals.AddRange(bloodWithdrawalList);
+            context.SaveChanges();
+
+            
+            List<Donation> donationsList = new List<Donation>
+            {
+                new Donation{DonationId = 1, DonationBloodVolume = 1, MedicalReport = "has Diabetes",BloodTypeId = donors[1].BloodTypeId, DonorId= 1, DonationDate = new DateTime(2019,3,21) },
+                new Donation{DonationId = 2, DonationBloodVolume = 1, MedicalReport = "flu like symptoms",BloodTypeId = donors[2].BloodTypeId, DonorId= 2, DonationDate = new DateTime(2020,4,3) },
+                new Donation{DonationId = 3, DonationBloodVolume = 1, MedicalReport = "COVID-19 Symptoms",BloodTypeId = donors[3].BloodTypeId, DonorId= 3, DonationDate = new DateTime(2019,12,5) },
+                new Donation{DonationId = 4, DonationBloodVolume = 1, MedicalReport = "healthy",BloodTypeId = donors[4].BloodTypeId, DonorId= 4, DonationDate = new DateTime(2020, 10, 31) },
+                new Donation{DonationId = 5, DonationBloodVolume = 1, MedicalReport = "traveled to Russia",BloodTypeId = donors[5].BloodTypeId, DonorId= 5, DonationDate = new DateTime(2020,11,21) },
+                new Donation{DonationId = 6, DonationBloodVolume = 1, MedicalReport = "recently infected with Pneumonia",BloodTypeId = donors[6].BloodTypeId, DonorId= 1, DonationDate = new DateTime(2020,5,1) },
+                new Donation{DonationId = 7, DonationBloodVolume = 1, MedicalReport = "traveled to USA",BloodTypeId = donors[7].BloodTypeId, DonorId= 7, DonationDate = new DateTime(2020,10,24) },
+                new Donation{DonationId = 8, DonationBloodVolume = 1, MedicalReport = "slight cough",BloodTypeId = donors[8].BloodTypeId, DonorId= 8, DonationDate = new DateTime(2020,7,1) },
+                new Donation{DonationId = 9, DonationBloodVolume = 1, MedicalReport = "fever",BloodTypeId = donors[9].BloodTypeId, DonorId= 9, DonationDate = new DateTime(2020,9,25) },
+                new Donation{DonationId = 10, DonationBloodVolume = 1, MedicalReport = "clinically dead",BloodTypeId = donors[10].BloodTypeId, DonorId= 10, DonationDate = new DateTime(2020,8,12) },
+            };
+            Dictionary<int, Donation> donations = donationsList.ToDictionary(x => x.DonationId, x => x);
+            context.Donations.AddRange(donationsList);
+            context.SaveChanges();
+
+            List<BloodWithdrawalUnit> bloodWithdrawalUnitsList = new List<BloodWithdrawalUnit>
+            {
+                new BloodWithdrawalUnit{BloodWithdrawalUnitsId = 1, UnitId = 1, BloodWithdrawalId= 1},
+                new BloodWithdrawalUnit{BloodWithdrawalUnitsId = 2, UnitId = 2, BloodWithdrawalId= 2},
+                new BloodWithdrawalUnit{BloodWithdrawalUnitsId = 3, UnitId = 3, BloodWithdrawalId= 3},
+                new BloodWithdrawalUnit{BloodWithdrawalUnitsId = 4, UnitId = 4, BloodWithdrawalId= 4},
+                new BloodWithdrawalUnit{BloodWithdrawalUnitsId = 5, UnitId = 5, BloodWithdrawalId= 5},
+                new BloodWithdrawalUnit{BloodWithdrawalUnitsId = 6, UnitId = 6, BloodWithdrawalId= 6},
+                new BloodWithdrawalUnit{BloodWithdrawalUnitsId = 7, UnitId = 7, BloodWithdrawalId= 7},
+                new BloodWithdrawalUnit{BloodWithdrawalUnitsId = 8, UnitId = 8, BloodWithdrawalId= 8},
+                new BloodWithdrawalUnit{BloodWithdrawalUnitsId = 9, UnitId = 9, BloodWithdrawalId= 9},
+                 new BloodWithdrawalUnit{BloodWithdrawalUnitsId = 10, UnitId = 10, BloodWithdrawalId= 10},
+
+            };
+            Dictionary<int, BloodWithdrawalUnit> bloodWithdrawalUnits = bloodWithdrawalUnitsList.ToDictionary(x => x.BloodWithdrawalUnitsId, x => x);
+            context.BloodWithdrawalUnits.AddRange(bloodWithdrawalUnitsList);
+            context.SaveChanges();
+
         }
     }
 }
