@@ -31,14 +31,96 @@ namespace BloodBankApp
             }
             // common setup for datagridview controls
 
-            InitializeDataGridView<BloodDeposit>(dataGridView1, "UnitId" );
-            InitializeDataGridView<BloodType>(dataGridView2, "BloodTypeId");
-            InitializeDataGridView<BloodWithdrawal>(dataGridView3, "BloodWithdrawalId");
-            InitializeDataGridView<BloodWithdrawalUnit>(dataGridView4 ,"BloodWithdrawalUnitsId");
-            InitializeDataGridView<Client>(dataGridView5 ,"ClientId");
-            InitializeDataGridView<Donation>(dataGridView6 ,"DonationId");
-            InitializeDataGridView<Donor>(dataGridView7 ,"DonorId");
+            //InitializeDataGridView<BloodDeposit>(dataGridView1, "UnitId" );
+            //InitializeDataGridView<BloodType>(dataGridView2, "BloodTypeId");
+            //InitializeDataGridView<BloodWithdrawal>(dataGridView3, "BloodWithdrawalId");
+            //InitializeDataGridView<BloodWithdrawalUnit>(dataGridView4 ,"BloodWithdrawalUnitsId");
+            //InitializeDataGridView<Client>(dataGridView5 ,"ClientId");
+            //InitializeDataGridView<Donation>(dataGridView6 ,"DonationId");
+           InitializeDataGridView<Donor>(dataGridViewDonars, "DonorId");
+            
+
+            // search button on the main page
+
+            buttonSearchDonar.Click += ButtonSearchDonar_Click;
+            textBoxFirstName.TextChanged += TextBoxFirstName_TextChanged;
+            //Searching the donor through textboxes
+            buttonReset.Click += ButtonReset_Click;
+
+
         }
+
+        private void ButtonReset_Click(object sender, EventArgs e)
+        {
+            dataGridViewSelectedDonars.Columns.Clear();
+        }
+
+        private void TextBoxFirstName_TextChanged(object sender, EventArgs e)
+        {
+            BloodBankEntities bloodBankEntities = new BloodBankEntities();
+
+            //BindingSource bindingSource = new BindingSource();
+            //bindingSource.DataSource = dataGridViewDonars.DataSource;
+            //bindingSource.Filter = "DonorFirstName like '" + textBoxFirstName.Text + "%'";
+
+            dataGridViewSelectedDonars.DataSource = bloodBankEntities.Donors.Where(x => x.DonorFirstName
+                                                    .Contains(textBoxFirstName.Text));
+
+
+
+        }
+
+
+        /// <summary>
+        /// search donar with firstname, last name and date of birth
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ButtonSearchDonar_Click(object sender, EventArgs e)
+        {
+            if (dataGridViewDonars.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Donar not selected");
+                return;
+            }
+            else
+            {
+                DisplaySelectedDonars();
+
+            }
+
+        }
+
+
+        private void DisplaySelectedDonars()
+        {
+
+                // create dataset to store selected donors to display
+
+                DataTable donorsColumns = new DataTable();
+                donorsColumns.Columns.Add("DonorId");
+                donorsColumns.Columns.Add("DonorFirstName");
+                donorsColumns.Columns.Add("DonorLastName");
+                donorsColumns.Columns.Add("DonorBirthday");
+                donorsColumns.Columns.Add("DonorAddress");
+                donorsColumns.Columns.Add("DonorPhone");
+                donorsColumns.Columns.Add("BloodTypeId");
+
+                foreach (DataGridViewRow dataGridViewRow in dataGridViewDonars.SelectedRows)
+                {
+                    if (dataGridViewDonars.SelectedRows.Count > 0)
+                    {
+                        donorsColumns.Rows.Add(dataGridViewRow.Cells[0].Value, dataGridViewRow.Cells[1].Value, dataGridViewRow.Cells[2].Value,
+                            dataGridViewRow.Cells[3].Value, dataGridViewRow.Cells[4].Value,
+                            dataGridViewRow.Cells[5].Value, dataGridViewRow.Cells[6].Value);
+                    }
+                }
+
+                dataGridViewSelectedDonars.DataSource = donorsColumns; // add selected donors to the datagridview
+
+        }
+
+
 
 
         /// <summary>
@@ -65,6 +147,7 @@ namespace BloodBankApp
 
             gridView.AllowUserToDeleteRows = true;
             gridView.ReadOnly = true;
+            gridView.MultiSelect = true;
             gridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
             // set the handler used to delete an item. Note use of generics.
