@@ -30,29 +30,25 @@ namespace BloodBankApp
                 context.SeedDatabase();
             }
             // common setup for datagridview controls
-
             //InitializeDataGridView<BloodDeposit>(dataGridView1, "UnitId" );
             //InitializeDataGridView<BloodType>(dataGridView2, "BloodTypeId");
             //InitializeDataGridView<BloodWithdrawal>(dataGridView3, "BloodWithdrawalId");
             //InitializeDataGridView<BloodWithdrawalUnit>(dataGridView4 ,"BloodWithdrawalUnitsId");
             //InitializeDataGridView<Client>(dataGridView5 ,"ClientId");
             //InitializeDataGridView<Donation>(dataGridView6 ,"DonationId");
-           InitializeDataGridView<Donor>(dataGridViewDonars, "DonorId");
-            
+            //InitializeDataGridView<Donor>(dataGridViewDonorsDatabase, "BloodTypes", "DonorId");      
+            initializeDonorsDataGridView();           
 
             // search button on the main page
-
-            buttonSearchDonar.Click += ButtonSearchDonar_Click;
+            buttonSearchDonor.Click += ButtonSearchDonor_Click;
             textBoxFirstName.TextChanged += TextBoxFirstName_TextChanged;
             //Searching the donor through textboxes
             buttonReset.Click += ButtonReset_Click;
-
-
         }
 
         private void ButtonReset_Click(object sender, EventArgs e)
         {
-            dataGridViewSelectedDonars.Columns.Clear();
+            dataGridViewSelectedDonors.Columns.Clear();
         }
 
         private void TextBoxFirstName_TextChanged(object sender, EventArgs e)
@@ -60,43 +56,81 @@ namespace BloodBankApp
             BloodBankEntities bloodBankEntities = new BloodBankEntities();
 
             //BindingSource bindingSource = new BindingSource();
-            //bindingSource.DataSource = dataGridViewDonars.DataSource;
+            //bindingSource.DataSource = dataGridViewDonors.DataSource;
             //bindingSource.Filter = "DonorFirstName like '" + textBoxFirstName.Text + "%'";
-
-            dataGridViewSelectedDonars.DataSource = bloodBankEntities.Donors.Where(x => x.DonorFirstName
+            dataGridViewSelectedDonors.DataSource = bloodBankEntities.Donors.Where(x => x.DonorFirstName
                                                     .Contains(textBoxFirstName.Text));
+        }
 
+        /// <summary>
+        /// Initializes the Donor Database Data Grid View with the data from the tables Donor and Blood Type
+        /// It reads from the contents of Donor and BloodType, instantiates a new DisplayDonor object and adds it to the 
+        /// DisplayDonor list. 
+        /// </summary>
+        private void initializeDonorsDataGridView()
+        {
+                
+                List<DisplayDonor> displayDonor = new List<DisplayDonor>();
+                List<Donor> donors = Controller<BloodBankEntities, Donor>.GetEntitiesWithIncluded("BloodType").ToList();
+                List<BloodType> bloodTypes = Controller<BloodBankEntities, BloodType>.GetEntitiesWithIncluded("Donors").ToList();
 
+                foreach(Donor donor in donors)
+                {
+                    // Getting the string value of the Blood Type name (BloodType1)
+                    string displayDonorBloodTypeName = "";
+                    foreach (BloodType bloodType in bloodTypes)
+                    {
+                        if (bloodType.BloodTypeId == donor.BloodTypeId)
+                        {
+                            displayDonorBloodTypeName = bloodType.BloodType1;
+                        }                            
+                    }
 
+                    // instantiate a DisplayDonor object and set its values to the ones from the DB
+                    var completeDonor = new DisplayDonor()
+                    {
+                        displayDonorFirstName = donor.DonorFirstName,
+                        displayDonorLastName = donor.DonorLastName,
+                        displayDonorAddress = donor.DonorAddress,
+                        displayDonorBirthday = donor.DonorBirthday.ToString(),
+                        displayDonorPhoneNumber = donor.DonorPhone,
+                        displayDonorBloodType = displayDonorBloodTypeName,
+                    };
+                    displayDonor.Add(completeDonor); // adding the new object to the list
+                }
+            dataGridViewDonorsDatabase.DataSource = displayDonor;
+            dataGridViewDonorsDatabase.Columns[0].Width = 100;
+            dataGridViewDonorsDatabase.Columns[1].Width = 100;
+            dataGridViewDonorsDatabase.Columns[2].Width = 135;
+            dataGridViewDonorsDatabase.Columns[3].Width = 70;
+            dataGridViewDonorsDatabase.Columns[4].Width = 90;
+            dataGridViewDonorsDatabase.Columns[5].Width = 80;
         }
 
 
         /// <summary>
-        /// search donar with firstname, last name and date of birth
+        /// search donor with firstname, last name and date of birth
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ButtonSearchDonar_Click(object sender, EventArgs e)
-        {
-            if (dataGridViewDonars.SelectedRows.Count == 0)
+        private void ButtonSearchDonor_Click(object sender, EventArgs e)
+        {// ==XX==XX== Button click to be used for searching donor by name and birth date
+
+            if (dataGridViewDonorsDatabase.SelectedRows.Count == 0)
             {
-                MessageBox.Show("Donar not selected");
+                MessageBox.Show("");
                 return;
             }
             else
             {
-                DisplaySelectedDonars();
-
+                DisplaySelectedDonors();
             }
-
         }
 
-
-        private void DisplaySelectedDonars()
+        private void DisplaySelectedDonors()
         {
-
+                // ==XX==XX== DISPLAY selected donor on the Data Grid View. 
                 // create dataset to store selected donors to display
-
                 DataTable donorsColumns = new DataTable();
                 donorsColumns.Columns.Add("DonorId");
                 donorsColumns.Columns.Add("DonorFirstName");
@@ -106,22 +140,17 @@ namespace BloodBankApp
                 donorsColumns.Columns.Add("DonorPhone");
                 donorsColumns.Columns.Add("BloodTypeId");
 
-                foreach (DataGridViewRow dataGridViewRow in dataGridViewDonars.SelectedRows)
+                foreach (DataGridViewRow dataGridViewRow in dataGridViewDonorsDatabase.SelectedRows)
                 {
-                    if (dataGridViewDonars.SelectedRows.Count > 0)
+                    if (dataGridViewDonorsDatabase.SelectedRows.Count > 0)
                     {
                         donorsColumns.Rows.Add(dataGridViewRow.Cells[0].Value, dataGridViewRow.Cells[1].Value, dataGridViewRow.Cells[2].Value,
-                            dataGridViewRow.Cells[3].Value, dataGridViewRow.Cells[4].Value,
-                            dataGridViewRow.Cells[5].Value, dataGridViewRow.Cells[6].Value);
+                        dataGridViewRow.Cells[3].Value, dataGridViewRow.Cells[4].Value,
+                        dataGridViewRow.Cells[5].Value, dataGridViewRow.Cells[6].Value);
                     }
                 }
-
-                dataGridViewSelectedDonars.DataSource = donorsColumns; // add selected donors to the datagridview
-
+                dataGridViewSelectedDonors.DataSource = donorsColumns; // add selected donors to the datagridview
         }
-
-
-
 
         /// <summary>
         /// Common generic method to initialize datagridview controls. Allows users to add and delete data,
@@ -142,27 +171,23 @@ namespace BloodBankApp
         private void InitializeDataGridView<T>(DataGridView gridView, params string[] columnsToHide) where T : class
         {
             // Allow users to add/delete rows, and fill out columns to the entire width of the control
-
             gridView.AllowUserToAddRows = false;
 
             gridView.AllowUserToDeleteRows = true;
             gridView.ReadOnly = true;
-            gridView.MultiSelect = true;
+            gridView.MultiSelect = false;
             gridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
             // set the handler used to delete an item. Note use of generics.
-
             gridView.UserDeletingRow += (s, e) => DeletingRow<T>(s as DataGridView, e);
 
             // probably not needed, but just in case we have some issues
-
             gridView.DataError += (s, e) => HandleDataError<T>(s as DataGridView, e);
 
             gridView.DataSource = Controller<BloodBankEntities, T>.SetBindingList();
 
-
-            foreach (string column in columnsToHide)
-                gridView.Columns[column].Visible = false;
+            //foreach (string column in columnsToHide)
+            //    gridView.Columns[column].Visible = false;
         }
 
         /// <summary>
@@ -176,14 +201,12 @@ namespace BloodBankApp
         private void DeletingRow<T>(DataGridView dataGridView, DataGridViewRowCancelEventArgs e) where T : class
         {
             // get the item
-
             T item = e.Row.DataBoundItem as T;
 
             Debug.WriteLine("DeletingRow " + e.Row.Index + " entity " + typeof(T) + " " + item);
 
             // Delete the item in the DB. No need to worry about dependencies, as there is no context!
             // Just let cascade delete take care of it.
-
             Controller<BloodBankEntities, T>.DeleteEntity(item);
             dataGridView.Refresh();
 
@@ -227,15 +250,12 @@ namespace BloodBankApp
             var result = form.ShowDialog();
 
             // form has closed
-
             if (result == DialogResult.OK)
             {
                 // reload the db and update the gridview
-
                 dataGridView.DataSource = Controller<BloodBankEntities, T>.SetBindingList();
 
                 // update the customer orders report
-
                 //dataGridViewCustomerOrders.DataSource = Controller<BloodBankEntities, CustomerOrder>.GetEntitiesNoTracking();
                 //dataGridViewCustomerOrders.Refresh();
             }
@@ -247,6 +267,27 @@ namespace BloodBankApp
             //  and the form will be reinitialized
 
             form.Hide();
+        }
+
+        private class DisplayDonor
+        {
+            [DisplayName("First Name")]
+            public string displayDonorFirstName { get; set; }
+
+            [DisplayName("Last Name")]
+            public string displayDonorLastName { get; set; }
+
+            [DisplayName("Address")]
+            public string displayDonorAddress { get; set; }
+
+            [DisplayName("Birthday")]
+            public string displayDonorBirthday { get; set; }
+
+            [DisplayName("Phone")]
+            public string displayDonorPhoneNumber { get; set; }
+
+            [DisplayName("Blood Type")]
+            public string displayDonorBloodType { get; set; }
         }
     }
 }
