@@ -241,7 +241,7 @@ namespace BloodBankApp
             this.Controls.Add(this.buttonBackToMain);
             this.Controls.Add(this.groupBoxDonorInformation);
             this.Name = "MakeDonationForm";
-            this.Text = "MakeDonationForm";
+            this.Text = "Make a donation";
             this.groupBoxDonorInformation.ResumeLayout(false);
             this.groupBoxDonorInformation.PerformLayout();
             this.groupBoxDonationInformation.ResumeLayout(false);
