@@ -152,7 +152,7 @@ namespace BloodBankApp
             // 
             // buttonMakeDonation
             // 
-            this.buttonMakeDonation.Location = new System.Drawing.Point(125, 514);
+            this.buttonMakeDonation.Location = new System.Drawing.Point(255, 514);
             this.buttonMakeDonation.Margin = new System.Windows.Forms.Padding(2);
             this.buttonMakeDonation.Name = "buttonMakeDonation";
             this.buttonMakeDonation.Size = new System.Drawing.Size(73, 45);
@@ -172,7 +172,7 @@ namespace BloodBankApp
             // 
             // buttonAddNewDonor
             // 
-            this.buttonAddNewDonor.Location = new System.Drawing.Point(215, 514);
+            this.buttonAddNewDonor.Location = new System.Drawing.Point(405, 514);
             this.buttonAddNewDonor.Margin = new System.Windows.Forms.Padding(2);
             this.buttonAddNewDonor.Name = "buttonAddNewDonor";
             this.buttonAddNewDonor.Size = new System.Drawing.Size(62, 45);
@@ -182,10 +182,10 @@ namespace BloodBankApp
             // 
             // buttonBloodBank
             // 
-            this.buttonBloodBank.Location = new System.Drawing.Point(86, 80);
+            this.buttonBloodBank.Location = new System.Drawing.Point(218, 37);
             this.buttonBloodBank.Margin = new System.Windows.Forms.Padding(2);
             this.buttonBloodBank.Name = "buttonBloodBank";
-            this.buttonBloodBank.Size = new System.Drawing.Size(108, 25);
+            this.buttonBloodBank.Size = new System.Drawing.Size(108, 68);
             this.buttonBloodBank.TabIndex = 14;
             this.buttonBloodBank.Text = "Blood Bank";
             this.buttonBloodBank.UseVisualStyleBackColor = true;
