@@ -42,6 +42,16 @@ namespace BloodBankApp
             // search button on the main page
             buttonSearchDonor.Click += ButtonSearchDonor_Click;
             textBoxFirstName.TextChanged += TextBoxFirstName_TextChanged;
+
+            DonorAddForm donorAddForm = new DonorAddForm();
+            buttonAddNewDonor.Click += (s, e) => AddOrUpdateForm<Donor>(dataGridViewDonorsDatabase, donorAddForm);
+
+            BloodBankStatusForm bbStatForm = new BloodBankStatusForm();
+            buttonBloodBank.Click += (s, e) => AddOrUpdateForm<BloodBankEntities>(null, bbStatForm);
+
+            WithdrawalForm withdraw = new WithdrawalForm();
+            buttonWithdrawBlood.Click += (s, e) => AddOrUpdateForm<BloodWithdrawal>(dataGridViewDonorsDatabase, withdraw);
+
             //Searching the donor through textboxes
             buttonReset.Click += ButtonReset_Click;
         }
