@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{034A401C-9928-4857-B799-7B64FD524720}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BloodBankDAL</RootNamespace>
+    <AssemblyName>BloodBankDAL</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DataOperations\BloodBankDAL.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BloodBankApp\BloodBankApp.csproj">
+      <Project>{25a2e279-0d06-4c81-9ad1-0c31a6a15e04}</Project>
+      <Name>BloodBankApp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BloodBankCodeFirstFromDB\BloodBankCodeFirstFromDB.csproj">
+      <Project>{1206a106-02df-49c5-8a55-acd63331005a}</Project>
+      <Name>BloodBankCodeFirstFromDB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BloodBankDB\BloodBankDB.sqlproj">
+      <Project>{d4efc28e-4bc3-4454-8454-b92a6fbc049a}</Project>
+      <Name>BloodBankDB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BloodBankValidations\BloodBankValidations.csproj">
+      <Project>{a4c25749-5519-4950-8d95-9408a4daa0fb}</Project>
+      <Name>BloodBankValidations</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj">
+      <Project>{eb0b2ade-19f9-4ec5-9e2c-f16960158037}</Project>
+      <Name>DataAccessLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EFControllerUtilities\EFControllerUtilities.csproj">
+      <Project>{67164aaa-9e1a-469c-8667-22afdfc3ef39}</Project>
+      <Name>EFControllerUtilities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

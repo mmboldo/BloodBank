@@ -56,6 +56,14 @@ namespace BloodBankApp
             buttonReset.Click += ButtonReset_Click;
 
             buttonAddClient.Click += ButtonAddClient_Click;
+
+            buttonReportAndReport.Click += ButtonReportAndReport_Click;
+        }
+
+        private void ButtonReportAndReport_Click(object sender, EventArgs e)
+        {
+            ReportsAndBackupForm reportsAndBackupForm = new ReportsAndBackupForm();
+            reportsAndBackupForm.Show();
         }
 
         private void ButtonAddClient_Click(object sender, EventArgs e)
