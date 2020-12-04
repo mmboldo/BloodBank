@@ -28,10 +28,11 @@ namespace BloodBankApp
         }
         private void ButtonSubmit_Click(object sender, EventArgs e)
         {
-
             BloodBankEntities context = new BloodBankEntities();
+            int id = context.Donors.Count() + 1;
             Donor donor = new Donor()
             {
+                DonorId = id,
                 DonorFirstName = textBoxFirstName.Text,
                 DonorLastName = textBoxLastName.Text,
                 DonorBirthday = dateTimePickerBirthday.Value,

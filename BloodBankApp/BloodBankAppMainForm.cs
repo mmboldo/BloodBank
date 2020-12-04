@@ -54,10 +54,9 @@ namespace BloodBankApp
 
             //Searching the donor through textboxes
             buttonReset.Click += ButtonReset_Click;
-
             buttonAddClient.Click += ButtonAddClient_Click;
-
             buttonReportAndReport.Click += ButtonReportAndReport_Click;
+            buttonMakeDonation.Click += ButtonMakeDonation_Click;
         }
 
         private void ButtonReportAndReport_Click(object sender, EventArgs e)
@@ -70,6 +69,12 @@ namespace BloodBankApp
         {
             AddClientForm addClientForm = new AddClientForm();
             addClientForm.Show();
+        }
+
+        private void ButtonMakeDonation_Click(object sender, EventArgs e)
+        {
+            MakeDonationForm makeDonationForm = new MakeDonationForm();
+            makeDonationForm.Show();
         }
 
         private void ButtonReset_Click(object sender, EventArgs e)
