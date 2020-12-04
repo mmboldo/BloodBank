@@ -66,5 +66,10 @@ namespace BloodBankApp
             context.Dispose();
             Close();
         }
+
+        // IMPORTANT: 
+        // CREATE HERE A CLASS SIMILAR TO THE ONE IN MAIN FORM TO 
+        // POPULATE THE DATA GRID VIEWS WITHOUT ERROR
+        // (end time you open the form is chaotic)
     }
 }

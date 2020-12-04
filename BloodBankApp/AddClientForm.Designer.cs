@@ -29,8 +29,6 @@
         private void InitializeComponent()
         {
             this.labelAddClientTitle = new System.Windows.Forms.Label();
-            this.labelAddClientID = new System.Windows.Forms.Label();
-            this.textBoxAddClientID = new System.Windows.Forms.TextBox();
             this.labelAddClientFirstName = new System.Windows.Forms.Label();
             this.textBoxAddClientFirstName = new System.Windows.Forms.TextBox();
             this.labelAddClientLastName = new System.Windows.Forms.Label();
@@ -42,82 +40,71 @@
             // 
             this.labelAddClientTitle.AutoSize = true;
             this.labelAddClientTitle.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.labelAddClientTitle.Location = new System.Drawing.Point(51, 38);
+            this.labelAddClientTitle.Location = new System.Drawing.Point(34, 25);
+            this.labelAddClientTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelAddClientTitle.Name = "labelAddClientTitle";
-            this.labelAddClientTitle.Size = new System.Drawing.Size(252, 22);
+            this.labelAddClientTitle.Size = new System.Drawing.Size(170, 15);
             this.labelAddClientTitle.TabIndex = 0;
             this.labelAddClientTitle.Text = "Fill the following form to add client:";
-            // 
-            // labelAddClientID
-            // 
-            this.labelAddClientID.AutoSize = true;
-            this.labelAddClientID.Location = new System.Drawing.Point(136, 120);
-            this.labelAddClientID.Name = "labelAddClientID";
-            this.labelAddClientID.Size = new System.Drawing.Size(30, 20);
-            this.labelAddClientID.TabIndex = 1;
-            this.labelAddClientID.Text = "ID:";
-            // 
-            // textBoxAddClientID
-            // 
-            this.textBoxAddClientID.Location = new System.Drawing.Point(184, 120);
-            this.textBoxAddClientID.Name = "textBoxAddClientID";
-            this.textBoxAddClientID.Size = new System.Drawing.Size(100, 26);
-            this.textBoxAddClientID.TabIndex = 2;
             // 
             // labelAddClientFirstName
             // 
             this.labelAddClientFirstName.AutoSize = true;
-            this.labelAddClientFirstName.Location = new System.Drawing.Point(80, 185);
+            this.labelAddClientFirstName.Location = new System.Drawing.Point(50, 67);
+            this.labelAddClientFirstName.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelAddClientFirstName.Name = "labelAddClientFirstName";
-            this.labelAddClientFirstName.Size = new System.Drawing.Size(90, 20);
+            this.labelAddClientFirstName.Size = new System.Drawing.Size(60, 13);
             this.labelAddClientFirstName.TabIndex = 3;
             this.labelAddClientFirstName.Text = "First Name:";
             // 
             // textBoxAddClientFirstName
             // 
-            this.textBoxAddClientFirstName.Location = new System.Drawing.Point(184, 185);
+            this.textBoxAddClientFirstName.Location = new System.Drawing.Point(114, 64);
+            this.textBoxAddClientFirstName.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.textBoxAddClientFirstName.Name = "textBoxAddClientFirstName";
-            this.textBoxAddClientFirstName.Size = new System.Drawing.Size(100, 26);
+            this.textBoxAddClientFirstName.Size = new System.Drawing.Size(68, 20);
             this.textBoxAddClientFirstName.TabIndex = 4;
             // 
             // labelAddClientLastName
             // 
             this.labelAddClientLastName.AutoSize = true;
-            this.labelAddClientLastName.Location = new System.Drawing.Point(84, 268);
+            this.labelAddClientLastName.Location = new System.Drawing.Point(50, 117);
+            this.labelAddClientLastName.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelAddClientLastName.Name = "labelAddClientLastName";
-            this.labelAddClientLastName.Size = new System.Drawing.Size(90, 20);
+            this.labelAddClientLastName.Size = new System.Drawing.Size(61, 13);
             this.labelAddClientLastName.TabIndex = 5;
             this.labelAddClientLastName.Text = "Last Name:";
             // 
             // textBoxAddClientLastName
             // 
-            this.textBoxAddClientLastName.Location = new System.Drawing.Point(184, 261);
+            this.textBoxAddClientLastName.Location = new System.Drawing.Point(114, 114);
+            this.textBoxAddClientLastName.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.textBoxAddClientLastName.Name = "textBoxAddClientLastName";
-            this.textBoxAddClientLastName.Size = new System.Drawing.Size(100, 26);
+            this.textBoxAddClientLastName.Size = new System.Drawing.Size(68, 20);
             this.textBoxAddClientLastName.TabIndex = 6;
             // 
             // buttonAddNewClient
             // 
-            this.buttonAddNewClient.Location = new System.Drawing.Point(140, 348);
+            this.buttonAddNewClient.Location = new System.Drawing.Point(78, 166);
+            this.buttonAddNewClient.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.buttonAddNewClient.Name = "buttonAddNewClient";
-            this.buttonAddNewClient.Size = new System.Drawing.Size(99, 41);
+            this.buttonAddNewClient.Size = new System.Drawing.Size(66, 27);
             this.buttonAddNewClient.TabIndex = 7;
             this.buttonAddNewClient.Text = "Add";
             this.buttonAddNewClient.UseVisualStyleBackColor = true;
             // 
             // AddClientForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(640, 611);
+            this.ClientSize = new System.Drawing.Size(245, 243);
             this.Controls.Add(this.buttonAddNewClient);
             this.Controls.Add(this.textBoxAddClientLastName);
             this.Controls.Add(this.labelAddClientLastName);
             this.Controls.Add(this.textBoxAddClientFirstName);
             this.Controls.Add(this.labelAddClientFirstName);
-            this.Controls.Add(this.textBoxAddClientID);
-            this.Controls.Add(this.labelAddClientID);
             this.Controls.Add(this.labelAddClientTitle);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "AddClientForm";
             this.Text = "AddClientForm";
             this.ResumeLayout(false);
@@ -128,8 +115,6 @@
         #endregion
 
         private System.Windows.Forms.Label labelAddClientTitle;
-        private System.Windows.Forms.Label labelAddClientID;
-        private System.Windows.Forms.TextBox textBoxAddClientID;
         private System.Windows.Forms.Label labelAddClientFirstName;
         private System.Windows.Forms.TextBox textBoxAddClientFirstName;
         private System.Windows.Forms.Label labelAddClientLastName;
