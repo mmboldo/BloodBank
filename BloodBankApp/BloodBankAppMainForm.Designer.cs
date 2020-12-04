@@ -268,7 +268,7 @@ namespace BloodBankApp
             // 
             this.buttonReportAndReport.Location = new System.Drawing.Point(858, 791);
             this.buttonReportAndReport.Name = "buttonReportAndReport";
-            this.buttonReportAndReport.Size = new System.Drawing.Size(98, 69);
+            this.buttonReportAndReport.Size = new System.Drawing.Size(128, 69);
             this.buttonReportAndReport.TabIndex = 21;
             this.buttonReportAndReport.Text = "Generate Report and Backup";
             this.buttonReportAndReport.UseVisualStyleBackColor = true;
