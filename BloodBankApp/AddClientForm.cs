@@ -33,7 +33,6 @@ namespace BloodBankApp
                 ClientFirstName = textBoxAddClientFirstName.Text,
                 ClientLastName = textBoxAddClientLastName.Text
             };
-            context.Dispose();
 
             //check if user fills name
             if (client.ClientFirstName.Trim().Length == 0 || client.ClientLastName.Trim().Length == 0 || client.ClientId == 0)
@@ -46,7 +45,10 @@ namespace BloodBankApp
                 MessageBox.Show("Cannot add course to database");
                 return;
             }
+            // save the changes to the database, dispose the context and close the form.
+            context.SaveChanges();
             this.DialogResult = DialogResult.OK;
+            context.Dispose();
             Close();
         }
 

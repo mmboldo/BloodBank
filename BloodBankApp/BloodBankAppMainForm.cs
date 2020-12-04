@@ -44,8 +44,6 @@ namespace BloodBankApp
 
             DonorAddForm donorAddForm = new DonorAddForm();
             buttonAddNewDonor.Click += (s, e) => AddOrUpdateForm<Donor>(dataGridViewDonorsDatabase, donorAddForm);
-            donorAddForm.FormClosed += donorAddForm_FormClosed;
-
 
             BloodBankStatusForm bbStatForm = new BloodBankStatusForm();
             buttonBloodBank.Click += (s, e) => AddOrUpdateForm<BloodBankEntities>(null, bbStatForm);
@@ -87,12 +85,6 @@ namespace BloodBankApp
             dataGridViewSearchResult.Columns.Clear();
             textBoxFirstName.Clear();
             textBoxLastName.Clear();
-        }
-
-        private void donorAddForm_FormClosed(Object sender, FormClosedEventArgs e)
-        {
-            MessageBox.Show("Yay!");
-            initializeDonorsDataGridView();
         }
 
         // Don't think this should be textChanged. It should be button click
@@ -351,12 +343,9 @@ namespace BloodBankApp
             // form has closed
             if (result == DialogResult.OK)
             {
-                // reload the db and update the gridview
-                dataGridView.DataSource = Controller<BloodBankEntities, T>.SetBindingList();
-
-                // update the customer orders report
-                //dataGridViewCustomerOrders.DataSource = Controller<BloodBankEntities, CustomerOrder>.GetEntitiesNoTracking();
-                //dataGridViewCustomerOrders.Refresh();
+                // update the gridview
+                initializeDonorsDataGridView();
+               
             }
 
             // do not close, as the form object will be disposed, 

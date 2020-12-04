@@ -40,7 +40,7 @@ namespace BloodBankApp
                 DonorPhone = numericUpDown1.Value.ToString(),
                 BloodTypeId = listBoxBloodType.SelectedIndex + 1,
             };
-            context.Dispose();
+            
             if (!(listBoxBloodType.SelectedItem is BloodType type))
             {
                 MessageBox.Show("Must select a blood type!");
@@ -61,7 +61,10 @@ namespace BloodBankApp
                 MessageBox.Show("Cannot add course to database");
                 return;
             }
+            // save the changes to the database, dispose the context and close the form.
+            context.SaveChanges();
             this.DialogResult = DialogResult.OK;
+            context.Dispose();
             Close();
         }
     }
