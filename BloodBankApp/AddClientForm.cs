@@ -45,8 +45,7 @@ namespace BloodBankApp
                 MessageBox.Show("Cannot add course to database");
                 return;
             }
-            // save the changes to the database, dispose the context and close the form.
-            context.SaveChanges();
+            // dispose the context and close the form.
             this.DialogResult = DialogResult.OK;
             context.Dispose();
             Close();
