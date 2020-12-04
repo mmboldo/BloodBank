@@ -41,10 +41,11 @@ namespace BloodBankApp
 
             // search button on the main page
             buttonSearchDonor.Click += ButtonSearchDonor_Click;
-            textBoxFirstName.TextChanged += TextBoxFirstName_TextChanged;
 
             DonorAddForm donorAddForm = new DonorAddForm();
             buttonAddNewDonor.Click += (s, e) => AddOrUpdateForm<Donor>(dataGridViewDonorsDatabase, donorAddForm);
+            donorAddForm.FormClosed += donorAddForm_FormClosed;
+
 
             BloodBankStatusForm bbStatForm = new BloodBankStatusForm();
             buttonBloodBank.Click += (s, e) => AddOrUpdateForm<BloodBankEntities>(null, bbStatForm);
@@ -59,29 +60,42 @@ namespace BloodBankApp
             buttonMakeDonation.Click += ButtonMakeDonation_Click;
         }
 
+        // Takes the user to the Report And Report
         private void ButtonReportAndReport_Click(object sender, EventArgs e)
         {
             ReportsAndBackupForm reportsAndBackupForm = new ReportsAndBackupForm();
             reportsAndBackupForm.Show();
         }
 
+        // Takes the user to the Add Client Form
         private void ButtonAddClient_Click(object sender, EventArgs e)
         {
             AddClientForm addClientForm = new AddClientForm();
             addClientForm.Show();
         }
 
+        // Takes the user to the Make Donation Form
         private void ButtonMakeDonation_Click(object sender, EventArgs e)
         {
             MakeDonationForm makeDonationForm = new MakeDonationForm();
             makeDonationForm.Show();
         }
 
+        // Resets the search fields and the data grid view with the search result
         private void ButtonReset_Click(object sender, EventArgs e)
         {
-            dataGridViewSelectedDonors.Columns.Clear();
+            dataGridViewSearchResult.Columns.Clear();
+            textBoxFirstName.Clear();
+            textBoxLastName.Clear();
         }
 
+        private void donorAddForm_FormClosed(Object sender, FormClosedEventArgs e)
+        {
+            MessageBox.Show("Yay!");
+            initializeDonorsDataGridView();
+        }
+
+        // Don't think this should be textChanged. It should be button click
         private void TextBoxFirstName_TextChanged(object sender, EventArgs e)
         {
             BloodBankEntities bloodBankEntities = new BloodBankEntities();
@@ -89,7 +103,7 @@ namespace BloodBankApp
             //BindingSource bindingSource = new BindingSource();
             //bindingSource.DataSource = dataGridViewDonors.DataSource;
             //bindingSource.Filter = "DonorFirstName like '" + textBoxFirstName.Text + "%'";
-            dataGridViewSelectedDonors.DataSource = bloodBankEntities.Donors.Where(x => x.DonorFirstName
+            dataGridViewSearchResult.DataSource = bloodBankEntities.Donors.Where(x => x.DonorFirstName
                                                     .Contains(textBoxFirstName.Text));
         }
 
@@ -129,6 +143,7 @@ namespace BloodBankApp
                     };
                     displayDonor.Add(completeDonor); // adding the new object to the list
                 }
+
             dataGridViewDonorsDatabase.DataSource = displayDonor;
             dataGridViewDonorsDatabase.Columns[0].Width = 100;
             dataGridViewDonorsDatabase.Columns[1].Width = 100;
@@ -138,23 +153,76 @@ namespace BloodBankApp
             dataGridViewDonorsDatabase.Columns[5].Width = 80;
         }
 
-
         /// <summary>
         /// search donor with firstname, last name and date of birth
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void ButtonSearchDonor_Click(object sender, EventArgs e)
-        {// ==XX==XX== Button click to be used for searching donor by name and birth date
+        {
+            List<DisplayDonor> displayDonor = new List<DisplayDonor>();
+            List<Donor> donors = Controller<BloodBankEntities, Donor>.GetEntitiesWithIncluded("BloodType").ToList();
+            List<BloodType> bloodTypes = Controller<BloodBankEntities, BloodType>.GetEntitiesWithIncluded("Donors").ToList();
 
-            if (dataGridViewDonorsDatabase.SelectedRows.Count == 0)
+            // string variables to store the search text boxes content
+            String firstName = "";
+            String lastName = "";
+
+            try
             {
-                MessageBox.Show("");
-                return;
+                firstName = textBoxFirstName.Text;
+                lastName = textBoxLastName.Text;
+            } catch (Exception ex)
+            {
+                Debug.WriteLine("ouch! " + ex.Message);
+            }
+
+            // go through all the donors and check if there is any donor names that look like what's begin searched
+            foreach (Donor donor in donors)
+            {
+                if (donor.DonorFirstName.Contains(firstName) && donor.DonorLastName.Contains(lastName))
+                {
+                    // Getting the string value of the Blood Type name (BloodType1)
+                    string displayDonorBloodTypeName = "";
+                    foreach (BloodType bloodType in bloodTypes)
+                    {
+                        if (bloodType.BloodTypeId == donor.BloodTypeId)
+                        {
+                            displayDonorBloodTypeName = bloodType.BloodType1;
+                        }
+                    }
+
+                    // instantiate a DisplayDonor object and set its values to the ones from the DB
+                    var completeDonor = new DisplayDonor()
+                    {
+                        displayDonorFirstName = donor.DonorFirstName,
+                        displayDonorLastName = donor.DonorLastName,
+                        displayDonorAddress = donor.DonorAddress,
+                        displayDonorBirthday = donor.DonorBirthday.ToString(),
+                        displayDonorPhoneNumber = donor.DonorPhone,
+                        displayDonorBloodType = displayDonorBloodTypeName,
+                    };
+                    displayDonor.Add(completeDonor); // adding the new object to the list
+                }
+            }
+
+            if (firstName == "" && lastName == "")
+            {
+                MessageBox.Show("One or more search fields are blank.");
+            }
+            else if (displayDonor.Count == 0)
+            {
+                MessageBox.Show("This donor is not registered. Please add new donor.");
             }
             else
             {
-                DisplaySelectedDonors();
+                dataGridViewSearchResult.DataSource = displayDonor;
+                dataGridViewSearchResult.Columns[0].Width = 100;
+                dataGridViewSearchResult.Columns[1].Width = 100;
+                dataGridViewSearchResult.Columns[2].Width = 135;
+                dataGridViewSearchResult.Columns[3].Width = 70;
+                dataGridViewSearchResult.Columns[4].Width = 90;
+                dataGridViewSearchResult.Columns[5].Width = 80;
             }
         }
 
@@ -180,7 +248,7 @@ namespace BloodBankApp
                         dataGridViewRow.Cells[5].Value, dataGridViewRow.Cells[6].Value);
                     }
                 }
-                dataGridViewSelectedDonors.DataSource = donorsColumns; // add selected donors to the datagridview
+                dataGridViewSearchResult.DataSource = donorsColumns; // add selected donors to the datagridview
         }
 
         /// <summary>

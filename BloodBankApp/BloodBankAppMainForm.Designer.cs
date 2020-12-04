@@ -37,7 +37,7 @@ namespace BloodBankApp
             this.labelDateOfBirth = new System.Windows.Forms.Label();
             this.textBoxDateOfBirth = new System.Windows.Forms.TextBox();
             this.buttonSearchDonor = new System.Windows.Forms.Button();
-            this.dataGridViewSelectedDonors = new System.Windows.Forms.DataGridView();
+            this.dataGridViewSearchResult = new System.Windows.Forms.DataGridView();
             this.labelCurrentFundsLabel = new System.Windows.Forms.Label();
             this.buttonMakeDonation = new System.Windows.Forms.Button();
             this.buttonWithdrawBlood = new System.Windows.Forms.Button();
@@ -52,7 +52,7 @@ namespace BloodBankApp
             this.labelCurrentFunds = new System.Windows.Forms.Label();
             this.buttonReportAndReport = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewDonorsDatabase)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewSelectedDonors)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewSearchResult)).BeginInit();
             this.groupBoxSearchDonor.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -126,13 +126,13 @@ namespace BloodBankApp
             // 
             // dataGridViewSelectedDonors
             // 
-            this.dataGridViewSelectedDonors.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewSelectedDonors.Location = new System.Drawing.Point(33, 574);
-            this.dataGridViewSelectedDonors.Name = "dataGridViewSelectedDonors";
-            this.dataGridViewSelectedDonors.RowHeadersWidth = 62;
-            this.dataGridViewSelectedDonors.RowTemplate.Height = 28;
-            this.dataGridViewSelectedDonors.Size = new System.Drawing.Size(1118, 188);
-            this.dataGridViewSelectedDonors.TabIndex = 8;
+            this.dataGridViewSearchResult.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewSearchResult.Location = new System.Drawing.Point(33, 574);
+            this.dataGridViewSearchResult.Name = "dataGridViewSelectedDonors";
+            this.dataGridViewSearchResult.RowHeadersWidth = 62;
+            this.dataGridViewSearchResult.RowTemplate.Height = 28;
+            this.dataGridViewSearchResult.Size = new System.Drawing.Size(1118, 188);
+            this.dataGridViewSearchResult.TabIndex = 8;
             // 
             // labelCurrentFundsLabel
             // 
@@ -287,14 +287,14 @@ namespace BloodBankApp
             this.Controls.Add(this.buttonAddNewDonor);
             this.Controls.Add(this.buttonWithdrawBlood);
             this.Controls.Add(this.buttonMakeDonation);
-            this.Controls.Add(this.dataGridViewSelectedDonors);
+            this.Controls.Add(this.dataGridViewSearchResult);
             this.Controls.Add(this.dataGridViewDonorsDatabase);
             this.Controls.Add(this.groupBoxSearchDonor);
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "BloodBankAppMainForm";
             this.Text = "Blood Bank Management System";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewDonorsDatabase)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewSelectedDonors)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewSearchResult)).EndInit();
             this.groupBoxSearchDonor.ResumeLayout(false);
             this.groupBoxSearchDonor.PerformLayout();
             this.groupBox1.ResumeLayout(false);
@@ -313,7 +313,7 @@ namespace BloodBankApp
         private System.Windows.Forms.Label labelDateOfBirth;
         private System.Windows.Forms.TextBox textBoxDateOfBirth;
         private System.Windows.Forms.Button buttonSearchDonor;
-        private System.Windows.Forms.DataGridView dataGridViewSelectedDonors;
+        private System.Windows.Forms.DataGridView dataGridViewSearchResult;
         private System.Windows.Forms.Label labelCurrentFundsLabel;
         private System.Windows.Forms.Button buttonMakeDonation;
         private System.Windows.Forms.Button buttonWithdrawBlood;
