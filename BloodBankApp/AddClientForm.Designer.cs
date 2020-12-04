@@ -106,7 +106,7 @@
             this.Controls.Add(this.labelAddClientTitle);
             this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "AddClientForm";
-            this.Text = "AddClientForm";
+            this.Text = "Add New Client";
             this.ResumeLayout(false);
             this.PerformLayout();
 
