@@ -105,8 +105,7 @@ namespace BloodBankApp
         /// DisplayDonor list. 
         /// </summary>
         private void initializeDonorsDataGridView()
-        {
-                
+        {                
                 List<DisplayDonor> displayDonor = new List<DisplayDonor>();
                 List<Donor> donors = Controller<BloodBankEntities, Donor>.GetEntitiesWithIncluded("BloodType").ToList();
                 List<BloodType> bloodTypes = Controller<BloodBankEntities, BloodType>.GetEntitiesWithIncluded("Donors").ToList();
@@ -123,23 +122,28 @@ namespace BloodBankApp
                         }                            
                     }
 
-                    // instantiate a DisplayDonor object and set its values to the ones from the DB
-                    var completeDonor = new DisplayDonor()
+                // get the donor birthday (DateTime) and get only the date part, ignoring the time portion
+                var donorBirthday = donor.DonorBirthday;
+                var shortDateValue = donorBirthday.ToShortDateString();
+
+                // instantiate a DisplayDonor object and set its values to the ones from the DB
+                var completeDonor = new DisplayDonor()
                     {
                         displayDonorFirstName = donor.DonorFirstName,
                         displayDonorLastName = donor.DonorLastName,
                         displayDonorAddress = donor.DonorAddress,
-                        displayDonorBirthday = donor.DonorBirthday.ToString(),
+                        displayDonorBirthday = shortDateValue,
                         displayDonorPhoneNumber = donor.DonorPhone,
                         displayDonorBloodType = displayDonorBloodTypeName,
                     };
                     displayDonor.Add(completeDonor); // adding the new object to the list
                 }
 
+                // setting up the data grid view columns
             dataGridViewDonorsDatabase.DataSource = displayDonor;
             dataGridViewDonorsDatabase.Columns[0].Width = 100;
             dataGridViewDonorsDatabase.Columns[1].Width = 100;
-            dataGridViewDonorsDatabase.Columns[2].Width = 135;
+            dataGridViewDonorsDatabase.Columns[2].Width = 150;
             dataGridViewDonorsDatabase.Columns[3].Width = 70;
             dataGridViewDonorsDatabase.Columns[4].Width = 90;
             dataGridViewDonorsDatabase.Columns[5].Width = 80;
@@ -157,13 +161,15 @@ namespace BloodBankApp
             List<BloodType> bloodTypes = Controller<BloodBankEntities, BloodType>.GetEntitiesWithIncluded("Donors").ToList();
 
             // string variables to store the search text boxes content
-            String firstName = "";
-            String lastName = "";
+            String searchedDonorFirstName = "";
+            String SearchedDonorLastName = "";
+            String SearchedDonorBirthday = "";
 
             try
             {
-                firstName = textBoxFirstName.Text;
-                lastName = textBoxLastName.Text;
+                searchedDonorFirstName = textBoxFirstName.Text;
+                SearchedDonorLastName = textBoxLastName.Text;
+                SearchedDonorBirthday = textBoxDateOfBirth.Text;
             } catch (Exception ex)
             {
                 Debug.WriteLine("ouch! " + ex.Message);
@@ -172,7 +178,7 @@ namespace BloodBankApp
             // go through all the donors and check if there is any donor names that look like what's begin searched
             foreach (Donor donor in donors)
             {
-                if (donor.DonorFirstName.Contains(firstName) && donor.DonorLastName.Contains(lastName))
+                if (donor.DonorFirstName.Contains(searchedDonorFirstName) && donor.DonorLastName.Contains(SearchedDonorLastName) && donor.DonorBirthday.ToString().Contains(SearchedDonorBirthday))
                 {
                     // Getting the string value of the Blood Type name (BloodType1)
                     string displayDonorBloodTypeName = "";
@@ -184,13 +190,17 @@ namespace BloodBankApp
                         }
                     }
 
+                    // get the donor birthday (DateTime) and get only the date part, ignoring the time portion
+                    var donorBirthday = donor.DonorBirthday;
+                    var shortDateValue = donorBirthday.ToShortDateString();
+
                     // instantiate a DisplayDonor object and set its values to the ones from the DB
                     var completeDonor = new DisplayDonor()
                     {
                         displayDonorFirstName = donor.DonorFirstName,
                         displayDonorLastName = donor.DonorLastName,
                         displayDonorAddress = donor.DonorAddress,
-                        displayDonorBirthday = donor.DonorBirthday.ToString(),
+                        displayDonorBirthday = shortDateValue,
                         displayDonorPhoneNumber = donor.DonorPhone,
                         displayDonorBloodType = displayDonorBloodTypeName,
                     };
@@ -198,20 +208,22 @@ namespace BloodBankApp
                 }
             }
 
-            if (firstName == "" && lastName == "")
+            // checks if all the search text boxes are blank
+            if (searchedDonorFirstName == "" && SearchedDonorLastName == "" && SearchedDonorBirthday == "")
             {
                 MessageBox.Show("One or more search fields are blank.");
             }
-            else if (displayDonor.Count == 0)
+            else if (displayDonor.Count == 0) // no results returned to the search
             {
                 MessageBox.Show("This donor is not registered. Please add new donor.");
             }
             else
             {
+                // setting up the data grid view columns
                 dataGridViewSearchResult.DataSource = displayDonor;
                 dataGridViewSearchResult.Columns[0].Width = 100;
                 dataGridViewSearchResult.Columns[1].Width = 100;
-                dataGridViewSearchResult.Columns[2].Width = 135;
+                dataGridViewSearchResult.Columns[2].Width = 150;
                 dataGridViewSearchResult.Columns[3].Width = 70;
                 dataGridViewSearchResult.Columns[4].Width = 90;
                 dataGridViewSearchResult.Columns[5].Width = 80;
