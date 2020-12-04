@@ -61,6 +61,7 @@ namespace BloodBankApp
             // get the table filled with records from the db
 
             DataTable table = bloodBankDB.GetDataTable(tableName);
+            
 
             // set the datasource to the table.
             // when the control changes, the table will change as well with one of the events below.
@@ -85,16 +86,16 @@ namespace BloodBankApp
             table.ColumnChanged += (s, e) => BloodBankTableColumnChanged(e);
 
             // handle deletes
-            table.RowDeleted += (s, e) => BloodBankTableRowDeleted(e);
+            //table.RowDeleted += (s, e) => BloodBankTableRowDeleted(e);
 
             // autosize the columns to fill out as much as possible
 
             dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-
+            dataGridView.AllowUserToDeleteRows = false;
             // allow multiple select to allow for deletion of multiple rows
 
             dataGridView.MultiSelect = true;
-            dataGridView.AllowUserToDeleteRows = true;
+            
 
             // add the table to the Tables collection.
             // This is only used for backup and restore
@@ -113,21 +114,22 @@ namespace BloodBankApp
         /// not work in the RowDeleting event, as the row has not changed yet!
         /// </summary>
         /// <param name="e"></param>
-        private void BloodBankTableRowDeleted(DataRowChangeEventArgs e)
-        {
-            try
-            {
-                bloodBankDB.DeleteTableRow(e.Row);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+        //private void BloodBankTableRowDeleted(DataRowChangeEventArgs e)
+        //{
+        //    try
+        //    {
+               // dataGridView.AllowUserToDeleteRows = false;
+        //        bloodBankDB.DeleteTableRow(e.Row);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show(ex.Message);
+        //    }
 
-            // update the lower control (a view)
+        //    // update the lower control (a view)
 
-           // bloodBankDB.LoadDataTable(dataGridViewStudents.DataSource as DataTable);
-        }
+        //   // bloodBankDB.LoadDataTable(dataGridViewStudents.DataSource as DataTable);
+        //}
 
 
         /// <summary>
