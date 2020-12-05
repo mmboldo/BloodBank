@@ -72,9 +72,31 @@ namespace BloodBankApp
             addClientForm.Show();
         }
 
+        // Strings that will contain the selected donor. 
+        // This is to be used to populate the labels in the Make a Donation Form
+        public static string SetMakeADonationFullName = "";
+        public static string SetMakeADonationEmail = "";
+        public static string SetMakeADonationBirthday = "";
+        public static string SetMakeADonationPhoneNumber = "";
+        public static string SetMakeADonationBloodType = "";
+
         // Takes the user to the Make Donation Form
         private void ButtonMakeDonation_Click(object sender, EventArgs e)
         {
+            // values 
+            if (dataGridViewDonorsDatabase.SelectedRows == null)
+            {
+                MessageBox.Show("You must first select a donor.");
+            } 
+            else
+            {
+                SetMakeADonationFullName = dataGridViewDonorsDatabase.CurrentRow.Cells[0].Value.ToString() + " " + dataGridViewDonorsDatabase.CurrentRow.Cells[1].Value.ToString();
+                SetMakeADonationEmail = dataGridViewDonorsDatabase.CurrentRow.Cells[2].Value.ToString();
+                SetMakeADonationBirthday = dataGridViewDonorsDatabase.CurrentRow.Cells[3].Value.ToString();
+                SetMakeADonationPhoneNumber = dataGridViewDonorsDatabase.CurrentRow.Cells[4].Value.ToString();
+                SetMakeADonationBloodType = dataGridViewDonorsDatabase.CurrentRow.Cells[5].Value.ToString();
+            }
+
             MakeDonationForm makeDonationForm = new MakeDonationForm();
             makeDonationForm.Show();
         }
@@ -97,6 +119,11 @@ namespace BloodBankApp
             //bindingSource.Filter = "DonorFirstName like '" + textBoxFirstName.Text + "%'";
             dataGridViewSearchResult.DataSource = bloodBankEntities.Donors.Where(x => x.DonorFirstName
                                                     .Contains(textBoxFirstName.Text));
+        }
+
+        private void getBloodType(List<BloodType> bloodTypes)
+        {
+
         }
 
         /// <summary>
@@ -388,6 +415,12 @@ namespace BloodBankApp
 
             [DisplayName("Blood Type")]
             public string displayDonorBloodType { get; set; }
+
+            override
+            public string ToString()
+            {
+                return (displayDonorFirstName + " " + displayDonorLastName);
+            }
         }
     }
 }

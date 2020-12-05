@@ -40,13 +40,14 @@ namespace BloodBankApp
             this.labelPhoneNumberLabel = new System.Windows.Forms.Label();
             this.labelEmailLabel = new System.Windows.Forms.Label();
             this.labelDonorNameLabel = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
+            this.labelDonatedBloodVolumeLabel = new System.Windows.Forms.Label();
             this.buttonBackToMain = new System.Windows.Forms.Button();
             this.buttonAddToBloodBank = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBoxDonatedBloodVolume = new System.Windows.Forms.TextBox();
             this.groupBoxDonationInformation = new System.Windows.Forms.GroupBox();
-            this.labelPricePerUnitLabel = new System.Windows.Forms.Label();
             this.labelTotalDonationPrice = new System.Windows.Forms.Label();
+            this.labelPricePerUnitLabel = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.groupBoxDonorInformation.SuspendLayout();
             this.groupBoxDonationInformation.SuspendLayout();
             this.SuspendLayout();
@@ -106,9 +107,9 @@ namespace BloodBankApp
             this.labelDateOfBirth.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.labelDateOfBirth.Location = new System.Drawing.Point(98, 68);
             this.labelDateOfBirth.MaximumSize = new System.Drawing.Size(60, 15);
-            this.labelDateOfBirth.MinimumSize = new System.Drawing.Size(60, 15);
+            this.labelDateOfBirth.MinimumSize = new System.Drawing.Size(65, 15);
             this.labelDateOfBirth.Name = "labelDateOfBirth";
-            this.labelDateOfBirth.Size = new System.Drawing.Size(60, 15);
+            this.labelDateOfBirth.Size = new System.Drawing.Size(65, 15);
             this.labelDateOfBirth.TabIndex = 6;
             // 
             // labelFullName
@@ -166,14 +167,14 @@ namespace BloodBankApp
             this.labelDonorNameLabel.TabIndex = 0;
             this.labelDonorNameLabel.Text = "Full Name:";
             // 
-            // label7
+            // labelDonatedBloodVolumeLabel
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(3, 157);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(119, 13);
-            this.label7.TabIndex = 1;
-            this.label7.Text = "Donated Blood Volume:";
+            this.labelDonatedBloodVolumeLabel.AutoSize = true;
+            this.labelDonatedBloodVolumeLabel.Location = new System.Drawing.Point(3, 157);
+            this.labelDonatedBloodVolumeLabel.Name = "labelDonatedBloodVolumeLabel";
+            this.labelDonatedBloodVolumeLabel.Size = new System.Drawing.Size(119, 13);
+            this.labelDonatedBloodVolumeLabel.TabIndex = 1;
+            this.labelDonatedBloodVolumeLabel.Text = "Donated Blood Volume:";
             // 
             // buttonBackToMain
             // 
@@ -193,26 +194,36 @@ namespace BloodBankApp
             this.buttonAddToBloodBank.Text = "Add to Blood Bank";
             this.buttonAddToBloodBank.UseVisualStyleBackColor = true;
             // 
-            // textBox1
+            // textBoxDonatedBloodVolume
             // 
-            this.textBox1.Location = new System.Drawing.Point(128, 154);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 4;
+            this.textBoxDonatedBloodVolume.Location = new System.Drawing.Point(128, 154);
+            this.textBoxDonatedBloodVolume.Name = "textBoxDonatedBloodVolume";
+            this.textBoxDonatedBloodVolume.Size = new System.Drawing.Size(100, 20);
+            this.textBoxDonatedBloodVolume.TabIndex = 4;
             // 
             // groupBoxDonationInformation
             // 
+            this.groupBoxDonationInformation.Controls.Add(this.label2);
             this.groupBoxDonationInformation.Controls.Add(this.labelTotalDonationPrice);
             this.groupBoxDonationInformation.Controls.Add(this.labelPricePerUnitLabel);
             this.groupBoxDonationInformation.Controls.Add(this.buttonAddToBloodBank);
-            this.groupBoxDonationInformation.Controls.Add(this.textBox1);
-            this.groupBoxDonationInformation.Controls.Add(this.label7);
+            this.groupBoxDonationInformation.Controls.Add(this.textBoxDonatedBloodVolume);
+            this.groupBoxDonationInformation.Controls.Add(this.labelDonatedBloodVolumeLabel);
             this.groupBoxDonationInformation.Location = new System.Drawing.Point(12, 267);
             this.groupBoxDonationInformation.Name = "groupBoxDonationInformation";
             this.groupBoxDonationInformation.Size = new System.Drawing.Size(319, 187);
             this.groupBoxDonationInformation.TabIndex = 5;
             this.groupBoxDonationInformation.TabStop = false;
             this.groupBoxDonationInformation.Text = "Donation Information";
+            // 
+            // labelTotalDonationPrice
+            // 
+            this.labelTotalDonationPrice.AutoSize = true;
+            this.labelTotalDonationPrice.Location = new System.Drawing.Point(94, 70);
+            this.labelTotalDonationPrice.Name = "labelTotalDonationPrice";
+            this.labelTotalDonationPrice.Size = new System.Drawing.Size(34, 13);
+            this.labelTotalDonationPrice.TabIndex = 6;
+            this.labelTotalDonationPrice.Text = "Total:";
             // 
             // labelPricePerUnitLabel
             // 
@@ -223,14 +234,15 @@ namespace BloodBankApp
             this.labelPricePerUnitLabel.TabIndex = 5;
             this.labelPricePerUnitLabel.Text = "Price per Unit (500 ml):";
             // 
-            // labelTotalDonationPrice
+            // label2
             // 
-            this.labelTotalDonationPrice.AutoSize = true;
-            this.labelTotalDonationPrice.Location = new System.Drawing.Point(94, 70);
-            this.labelTotalDonationPrice.Name = "labelTotalDonationPrice";
-            this.labelTotalDonationPrice.Size = new System.Drawing.Size(34, 13);
-            this.labelTotalDonationPrice.TabIndex = 6;
-            this.labelTotalDonationPrice.Text = "Total:";
+            this.label2.AutoSize = true;
+            this.label2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.label2.Location = new System.Drawing.Point(135, 39);
+            this.label2.MinimumSize = new System.Drawing.Size(60, 15);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(60, 15);
+            this.label2.TabIndex = 7;
             // 
             // MakeDonationForm
             // 
@@ -263,12 +275,13 @@ namespace BloodBankApp
         private System.Windows.Forms.Label labelDateOfBirth;
         private System.Windows.Forms.Label labelFullName;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label labelDonatedBloodVolumeLabel;
         private System.Windows.Forms.Button buttonBackToMain;
         private System.Windows.Forms.Button buttonAddToBloodBank;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBoxDonatedBloodVolume;
         private System.Windows.Forms.GroupBox groupBoxDonationInformation;
         private System.Windows.Forms.Label labelTotalDonationPrice;
         private System.Windows.Forms.Label labelPricePerUnitLabel;
+        private System.Windows.Forms.Label label2;
     }
 }
