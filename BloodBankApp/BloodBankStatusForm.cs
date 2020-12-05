@@ -26,6 +26,7 @@ namespace BloodBankApp
         {
             initializeDepositDGV();
             initializeDonationDGV();
+            initializeWithdrawalDGV();
 
         }
         private void initializeDonationDGV()
@@ -85,7 +86,7 @@ namespace BloodBankApp
 
                 DateTime expiryDate = b.UnitExpiryDate;
                 String date = expiryDate.ToShortDateString();
-                decimal cost = Math.Round((b.UnitPrice * 100) / 100);
+                decimal cost = Math.Round(b.UnitPrice, 2);
                 DisplayDeposit dd = new DisplayDeposit()
                 {
                     displayDepositId = b.UnitId.ToString(),
@@ -97,6 +98,39 @@ namespace BloodBankApp
             }
             dataGridViewStock.DataSource = displayDeposit;
             dataGridViewStock.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+        }
+
+        private void initializeWithdrawalDGV()
+        {
+            List<DisplayWithdrawal> displayWithdrawal = new List<DisplayWithdrawal>();
+            List<BloodWithdrawal> bloodWithdrawal = Controller<BloodBankEntities, BloodWithdrawal>.SetBindingList().ToList();
+            List<Client> clients = Controller<BloodBankEntities, Client>.SetBindingList().ToList();
+            foreach (BloodWithdrawal b in bloodWithdrawal)
+            {
+                string clientName = "";
+                foreach (Client client in clients)
+                {
+                    if (client.ClientId == b.ClientId)
+                    {
+                        clientName = client.ClientLastName + ", " + client.ClientFirstName;
+                    }
+                }
+
+                DateTime withdrawalDate = b.BloodWithdrawalDate;
+                String date = withdrawalDate.ToShortDateString();
+                decimal cost = Math.Round(Decimal.Parse(b.TransactionValue.ToString()), 2);
+                DisplayWithdrawal dw = new DisplayWithdrawal()
+                {
+                    displayWithdrawalId = b.BloodWithdrawalId.ToString(),
+                    displayClientName = clientName,
+                    displayWithdrawalDate = date,
+                    displayTransValue = cost.ToString(),
+                    displayQuantity = b.UnitQuantity.ToString(),
+                };
+                displayWithdrawal.Add(dw);
+            }
+            dataGridViewWithdrawals.DataSource = displayWithdrawal;
+            dataGridViewWithdrawals.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
         private class DisplayDonation
         {
@@ -123,6 +157,23 @@ namespace BloodBankApp
             public string displayExpiryDate { get; set; }
             [DisplayName("Blood Type")]
             public string displayBloodType { get; set; }
+        }
+        private class DisplayWithdrawal
+        {
+            [DisplayName("Withdrawal ID")]
+            public string displayWithdrawalId { get; set; }
+            [DisplayName("Client Name")]
+            public string displayClientName { get; set; }
+
+            [DisplayName("Withdrawal Date")]
+            public string displayWithdrawalDate { get; set; }
+            [DisplayName("Transaction Value")]
+            public string displayTransValue { get; set; }
+            [DisplayName("Quantity")]
+            public string displayQuantity { get; set; }
+
+
+
         }
     }
 }
