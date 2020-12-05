@@ -24,78 +24,156 @@ namespace BloodBankApp
 
         private void BloodBankStatusForm_Load(object sender, EventArgs e)
         {
-            dataGridViewDonations.DataSource = Controller<BloodBankEntities, Donation>.SetBindingList();
+            initializeDepositDGV();
+            initializeDonationDGV();
+            initializeWithdrawalDGV();
 
-            dataGridViewStock.DataSource = Controller<BloodBankEntities, BloodDeposit>.SetBindingList();
+        }
+        private void initializeDonationDGV()
+        {
+            List<DisplayDonation> displayDonation = new List<DisplayDonation>();
+            List<Donation> donations = Controller<BloodBankEntities, Donation>.SetBindingList().ToList();
+            List<Donor> donors = Controller<BloodBankEntities, Donor>.GetEntitiesWithIncluded("BloodType").ToList();
+            List<BloodType> bloodTypes = Controller<BloodBankEntities, BloodType>.GetEntitiesWithIncluded("Donors").ToList();
+            foreach (Donation d in donations)
+            {
+                string donorBloodTypeName = "";
+                string donorName = "";
+                foreach (BloodType bloodType in bloodTypes)
+                {
+                    if (bloodType.BloodTypeId == d.BloodTypeId)
+                    {
+                        donorBloodTypeName = bloodType.BloodType1;
+                    }
+                }
+                foreach(Donor donor in donors)
+                {
+                    if(donor.DonorId == d.DonorId)
+                    {
+                        donorName = donor.DonorLastName + ", "+ donor.DonorFirstName;
+                    }
+                }
+                DateTime donationDate = d.DonationDate.Date;
+                String date = donationDate.ToShortDateString();
+                DisplayDonation dd = new DisplayDonation()
+                {
+                    displayDonorName = donorName,
+                    displayMedicalReport = d.MedicalReport,
+                    displayDonorBloodType = donorBloodTypeName,
+                    displayDonationDate = date,
+                };
+                displayDonation.Add(dd);
+            }
+            dataGridViewDonations.DataSource = displayDonation;
+            dataGridViewDonations.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            
+        }
+        private void initializeDepositDGV()
+        {
+            List<DisplayDeposit> displayDeposit = new List<DisplayDeposit>();
+            List<BloodDeposit> bloodDeposit = Controller<BloodBankEntities, BloodDeposit>.SetBindingList().ToList();
+            List<BloodType> bloodTypes = Controller<BloodBankEntities, BloodType>.SetBindingList().ToList();
+            foreach (BloodDeposit b in bloodDeposit)
+            {
+                string depositBloodType = "";
+                foreach (BloodType bloodType in bloodTypes)
+                {
+                    if (bloodType.BloodTypeId == b.BloodTypeId)
+                    {
+                        depositBloodType = bloodType.BloodType1;
+                    }
+                }
 
-            dataGridViewWithdrawals.DataSource = Controller<BloodBankEntities, BloodWithdrawal>.SetBindingList();
-            dataGridViewDonations.Columns.Remove("Donor");
-            dataGridViewDonations.Columns.Remove("BloodType");
-            dataGridViewStock.Columns.Remove("BloodType");
-            dataGridViewStock.Columns.Remove("BloodWithdrawalUnits");
-            dataGridViewWithdrawals.Columns.Remove("Client");
-            dataGridViewWithdrawals.Columns.Remove("BloodWithdrawalUnits");
-            /*
-            BloodBankEntities context = new BloodBankEntities();
-            List<Donation> Aplus = context.Donations.Where(b => b.BloodTypeId == 1).ToList();
-            List<Donation> Aminus = context.Donations.Where(b => b.BloodTypeId == 2).ToList();
-            List<Donation> Bplus = context.Donations.Where(b => b.BloodTypeId == 3).ToList();
-            List<Donation> Bminus = context.Donations.Where(b => b.BloodTypeId == 4).ToList();
-            List<Donation> ABplus = context.Donations.Where(b => b.BloodTypeId == 5).ToList();
-            List<Donation> ABminus = context.Donations.Where(b => b.BloodTypeId == 6).ToList();
-            List<Donation> Oplus = context.Donations.Where(b => b.BloodTypeId == 7).ToList();
-            List<Donation> Ominus = context.Donations.Where(b => b.BloodTypeId == 8).ToList();
-            float AplusStock = 0;
-            float AminusStock = 0;
-            float BplusStock = 0;
-            float BminusStock = 0;
-            float ABplusStock = 0;
-            float ABminusStock = 0;
-            float OplusStock = 0;
-            float OminusStock = 0;
-            foreach(Donation a in Aplus)
-            {
-                AplusStock += a.DonationBloodVolume;
+                DateTime expiryDate = b.UnitExpiryDate;
+                String date = expiryDate.ToShortDateString();
+                decimal cost = Math.Round(b.UnitPrice, 2);
+                DisplayDeposit dd = new DisplayDeposit()
+                {
+                    displayDepositId = b.UnitId.ToString(),
+                    displayUnitPrice = cost.ToString(),
+                    displayExpiryDate = date,
+                    displayBloodType = depositBloodType,
+                };
+                displayDeposit.Add(dd);
             }
-            foreach(Donation a in Aminus)
-            {
-                AminusStock += a.DonationBloodVolume;
-            }
-            foreach(Donation b in Bplus)
-            {
-                BplusStock += b.DonationBloodVolume;
-            }
-            foreach(Donation b in Bminus)
-            {
-                BminusStock += b.DonationBloodVolume;
-            }
-            foreach(Donation ab in ABplus)
-            {
-                ABplusStock += ab.DonationBloodVolume;
-            }
-            foreach(Donation ab in ABminus)
-            {
-                ABminusStock += ab.DonationBloodVolume;
-            }
-            foreach(Donation o in Oplus)
-            {
-                OplusStock += o.DonationBloodVolume;
-            }
-            foreach(Donation o in Ominus)
-            {
-                OminusStock += o.DonationBloodVolume;
-            }
-            dataGridViewStock.Columns[0].HeaderText = "Blood Type";
-            dataGridViewStock.Columns[1].HeaderText = "Quantity(units)";
-            dataGridViewStock.Columns[2].HeaderText = "Price per unit";
-            dataGridViewStock.Columns[3].HeaderText = "Expiry date";
-            DataGridViewRow row = new DataGridViewRow();
-            row.Cells[0].Value = "A+";
-            row.Cells[1].Value = AplusStock;
-            BloodType A = context.BloodTypes.Where(b => b.BloodTypeId == 1).First<BloodType>();
-            row.Cells[2].Value = A.PricePerUnit;
-            dataGridViewStock.Rows.Add(row);*/
+            dataGridViewStock.DataSource = displayDeposit;
+            dataGridViewStock.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
+        private void initializeWithdrawalDGV()
+        {
+            List<DisplayWithdrawal> displayWithdrawal = new List<DisplayWithdrawal>();
+            List<BloodWithdrawal> bloodWithdrawal = Controller<BloodBankEntities, BloodWithdrawal>.SetBindingList().ToList();
+            List<Client> clients = Controller<BloodBankEntities, Client>.SetBindingList().ToList();
+            foreach (BloodWithdrawal b in bloodWithdrawal)
+            {
+                string clientName = "";
+                foreach (Client client in clients)
+                {
+                    if (client.ClientId == b.ClientId)
+                    {
+                        clientName = client.ClientLastName + ", " + client.ClientFirstName;
+                    }
+                }
+
+                DateTime withdrawalDate = b.BloodWithdrawalDate;
+                String date = withdrawalDate.ToShortDateString();
+                decimal cost = Math.Round(Decimal.Parse(b.TransactionValue.ToString()), 2);
+                DisplayWithdrawal dw = new DisplayWithdrawal()
+                {
+                    displayWithdrawalId = b.BloodWithdrawalId.ToString(),
+                    displayClientName = clientName,
+                    displayWithdrawalDate = date,
+                    displayTransValue = cost.ToString(),
+                    displayQuantity = b.UnitQuantity.ToString(),
+                };
+                displayWithdrawal.Add(dw);
+            }
+            dataGridViewWithdrawals.DataSource = displayWithdrawal;
+            dataGridViewWithdrawals.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+        }
+        private class DisplayDonation
+        {
+            [DisplayName("Name")]
+            public string displayDonorName { get; set; }
+
+            [DisplayName("Medical Report")]
+            public string displayMedicalReport { get; set; }
+
+            [DisplayName("Blood Type")]
+            public string displayDonorBloodType { get; set; }
+            [DisplayName("Donation Date")]
+            public string displayDonationDate { get; set; }
+        }
+        private class DisplayDeposit
+        {
+            [DisplayName("Deposit ID")]
+            public string displayDepositId { get; set; }
+
+            [DisplayName("Unit Price")]
+            public string displayUnitPrice { get; set; }
+
+            [DisplayName("Expiry Date")]
+            public string displayExpiryDate { get; set; }
+            [DisplayName("Blood Type")]
+            public string displayBloodType { get; set; }
+        }
+        private class DisplayWithdrawal
+        {
+            [DisplayName("Withdrawal ID")]
+            public string displayWithdrawalId { get; set; }
+            [DisplayName("Client Name")]
+            public string displayClientName { get; set; }
+
+            [DisplayName("Withdrawal Date")]
+            public string displayWithdrawalDate { get; set; }
+            [DisplayName("Transaction Value")]
+            public string displayTransValue { get; set; }
+            [DisplayName("Quantity")]
+            public string displayQuantity { get; set; }
+
+
+
+        }
     }
 }
