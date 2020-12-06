@@ -24,12 +24,9 @@ namespace BloodBankApp
         }
         private void WithdrawForm_Load(object sender, EventArgs e)
         {
-            dataGridViewStock.DataSource = Controller<BloodBankEntities, BloodDeposit>.SetBindingList();
-
-            dataGridViewClient.DataSource = Controller<BloodBankEntities, Client>.SetBindingList();
-            dataGridViewStock.Columns.Remove("BloodType");
-            dataGridViewStock.Columns.Remove("BloodWithdrawalUnits");
-            dataGridViewClient.Columns.Remove("BloodWithdrawals");
+            initializeDepositDGV();
+            initializeClientDGV();
+            
         }
 
         private void ButtonWithdraw_Click(object sender, EventArgs e)
@@ -82,8 +79,87 @@ namespace BloodBankApp
         {
             foreach (DataGridViewRow row in dataGridViewStock.SelectedRows)
             {
-                textBoxTotal.Text = row.Cells["UnitPrice"].Value.ToString();
+                textBoxTotal.Text = row.Cells[1].Value.ToString();
             }
+        }
+        //Initializes Stock DGV
+        private void initializeDepositDGV()
+        {
+            List<DisplayDeposit> displayDeposit = new List<DisplayDeposit>();
+            List<BloodDeposit> bloodDeposit = Controller<BloodBankEntities, BloodDeposit>.SetBindingList().ToList();
+            List<BloodType> bloodTypes = Controller<BloodBankEntities, BloodType>.SetBindingList().ToList();
+            foreach (BloodDeposit b in bloodDeposit)
+            {
+                string depositBloodType = "";
+                //get blood type from id
+                foreach (BloodType bloodType in bloodTypes)
+                {
+                    if (bloodType.BloodTypeId == b.BloodTypeId)
+                    {
+                        depositBloodType = bloodType.BloodType1;
+                    }
+                }
+
+                DateTime expiryDate = b.UnitExpiryDate;
+                String date = expiryDate.ToShortDateString();
+                //round price to 2 decimals
+                decimal cost = Math.Round(b.UnitPrice, 2);
+                //create display object
+                DisplayDeposit dd = new DisplayDeposit()
+                {
+                    displayDepositId = b.UnitId.ToString(),
+                    displayUnitPrice = cost.ToString(),
+                    displayExpiryDate = date,
+                    displayBloodType = depositBloodType,
+                };
+                displayDeposit.Add(dd);
+            }
+            //add to DGV
+            dataGridViewStock.DataSource = displayDeposit;
+            dataGridViewStock.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
+            }
+        //Initializes Client DGV
+        private void initializeClientDGV()
+        {
+            List<DisplayClient> displayClient = new List<DisplayClient>();
+            List<Client> clients = Controller<BloodBankEntities, Client>.SetBindingList().ToList();
+
+            foreach (Client c in clients)
+            {
+                //create display object
+                DisplayClient dc = new DisplayClient()
+                {
+                    displayClientId = c.ClientId.ToString(),
+                    displayClientName = c.ClientLastName + ", " + c.ClientFirstName,
+                };
+                displayClient.Add(dc);
+            }
+            //add to DGV
+            dataGridViewClient.DataSource = displayClient;
+            dataGridViewClient.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+        }
+        private class DisplayDeposit
+        {
+            [DisplayName("Deposit ID")]
+            public string displayDepositId { get; set; }
+
+            [DisplayName("Unit Price")]
+            public string displayUnitPrice { get; set; }
+
+            [DisplayName("Expiry Date")]
+            public string displayExpiryDate { get; set; }
+            [DisplayName("Blood Type")]
+            public string displayBloodType { get; set; }
+        }
+        private class DisplayClient
+        {
+
+            [DisplayName("Client ID")]
+            public string displayClientId { get; set; }
+            [DisplayName("Name")]
+            public string displayClientName { get; set; }
+
         }
     }
 }
