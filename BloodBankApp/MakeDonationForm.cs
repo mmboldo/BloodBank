@@ -24,6 +24,7 @@ namespace BloodBankApp
             labelFullName.Text = BloodBankAppMainForm.SetMakeADonationFullName;
             labelDateOfBirth.Text = BloodBankAppMainForm.SetMakeADonationBirthday;
             labelEmail.Text = BloodBankAppMainForm.SetMakeADonationEmail;
+            labelPhoneNumber.Text = BloodBankAppMainForm.SetMakeADonationPhoneNumber;
             labelBloodType.Text = BloodBankAppMainForm.SetMakeADonationBloodType;
             
             // calculate the value based on the qty of ml donated and the price per ml of the blood type
