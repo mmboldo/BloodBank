@@ -15,6 +15,7 @@ namespace BloodBankApp
     {
         public WithdrawalForm()
         {
+            //load the form
             InitializeComponent();
             this.Load += WithdrawForm_Load;
 
@@ -34,6 +35,7 @@ namespace BloodBankApp
         private void ButtonWithdraw_Click(object sender, EventArgs e)
         {
             BloodBankEntities context = new BloodBankEntities();
+            //create a BloodWithdrawal object
             BloodWithdrawal bw = new BloodWithdrawal()
             {
                 BloodWithdrawalId = context.BloodWithdrawals.Count() + 1,
@@ -42,6 +44,7 @@ namespace BloodBankApp
                 UnitQuantity = 1,
                 ClientId = Int32.Parse(dataGridViewClient.SelectedRows[0].Cells[0].Value.ToString())
             };
+            //validate
             if (dataGridViewStock.SelectedRows.Count < 1)
             {
                 MessageBox.Show("Please select an item to withdraw");
@@ -52,19 +55,20 @@ namespace BloodBankApp
                 MessageBox.Show("Please select a client for withdrawal");
                 return;
             }
-
+            //add to db
             if (Controller<BloodBankEntities, BloodWithdrawal>.AddEntity(bw) == null)
             {
                 MessageBox.Show("Cannot add withdrawal to database");
                 return;
             }
-
+            //creates a new BloodWithdrawalUnit object
             BloodWithdrawalUnit bwu = new BloodWithdrawalUnit()
             {
                 UnitId = Int32.Parse(dataGridViewStock.SelectedRows[0].Cells[0].Value.ToString()),
                 BloodWithdrawalId = context.BloodWithdrawals.Count(),
             };
             context.Dispose();
+            //add to d b
             if (Controller<BloodBankEntities, BloodWithdrawalUnit>.AddEntity(bwu) == null)
             {
                 MessageBox.Show("Cannot add withdrawal to database");
@@ -73,6 +77,7 @@ namespace BloodBankApp
             this.DialogResult = DialogResult.OK;
             Close();
         }
+        //populates price from selected item
         private void GetSelection()
         {
             foreach (DataGridViewRow row in dataGridViewStock.SelectedRows)

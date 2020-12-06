@@ -21,7 +21,7 @@ namespace BloodBankApp
             this.Load += BloodBankStatusForm_Load;
 
         }
-
+        //load form
         private void BloodBankStatusForm_Load(object sender, EventArgs e)
         {
             initializeDepositDGV();
@@ -29,6 +29,7 @@ namespace BloodBankApp
             initializeWithdrawalDGV();
 
         }
+        //create DGV for donations
         private void initializeDonationDGV()
         {
             List<DisplayDonation> displayDonation = new List<DisplayDonation>();
@@ -39,6 +40,7 @@ namespace BloodBankApp
             {
                 string donorBloodTypeName = "";
                 string donorName = "";
+                //get blood type from id
                 foreach (BloodType bloodType in bloodTypes)
                 {
                     if (bloodType.BloodTypeId == d.BloodTypeId)
@@ -46,6 +48,7 @@ namespace BloodBankApp
                         donorBloodTypeName = bloodType.BloodType1;
                     }
                 }
+                //get donor name from id
                 foreach(Donor donor in donors)
                 {
                     if(donor.DonorId == d.DonorId)
@@ -55,6 +58,7 @@ namespace BloodBankApp
                 }
                 DateTime donationDate = d.DonationDate.Date;
                 String date = donationDate.ToShortDateString();
+                //create display object
                 DisplayDonation dd = new DisplayDonation()
                 {
                     displayDonorName = donorName,
@@ -64,6 +68,7 @@ namespace BloodBankApp
                 };
                 displayDonation.Add(dd);
             }
+            //add to DGV
             dataGridViewDonations.DataSource = displayDonation;
             dataGridViewDonations.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             
@@ -76,6 +81,7 @@ namespace BloodBankApp
             foreach (BloodDeposit b in bloodDeposit)
             {
                 string depositBloodType = "";
+                //get blood type from id
                 foreach (BloodType bloodType in bloodTypes)
                 {
                     if (bloodType.BloodTypeId == b.BloodTypeId)
@@ -86,7 +92,9 @@ namespace BloodBankApp
 
                 DateTime expiryDate = b.UnitExpiryDate;
                 String date = expiryDate.ToShortDateString();
+                //round price to 2 decimals
                 decimal cost = Math.Round(b.UnitPrice, 2);
+                //create display object
                 DisplayDeposit dd = new DisplayDeposit()
                 {
                     displayDepositId = b.UnitId.ToString(),
@@ -96,6 +104,7 @@ namespace BloodBankApp
                 };
                 displayDeposit.Add(dd);
             }
+            //add to DGV
             dataGridViewStock.DataSource = displayDeposit;
             dataGridViewStock.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
@@ -108,6 +117,8 @@ namespace BloodBankApp
             foreach (BloodWithdrawal b in bloodWithdrawal)
             {
                 string clientName = "";
+
+                //get client name from id
                 foreach (Client client in clients)
                 {
                     if (client.ClientId == b.ClientId)
@@ -118,7 +129,9 @@ namespace BloodBankApp
 
                 DateTime withdrawalDate = b.BloodWithdrawalDate;
                 String date = withdrawalDate.ToShortDateString();
+                //round prices to 2 decimals
                 decimal cost = Math.Round(Decimal.Parse(b.TransactionValue.ToString()), 2);
+                //create display object
                 DisplayWithdrawal dw = new DisplayWithdrawal()
                 {
                     displayWithdrawalId = b.BloodWithdrawalId.ToString(),
@@ -129,9 +142,11 @@ namespace BloodBankApp
                 };
                 displayWithdrawal.Add(dw);
             }
+            //add objects to DGV
             dataGridViewWithdrawals.DataSource = displayWithdrawal;
             dataGridViewWithdrawals.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
+        //display object classes
         private class DisplayDonation
         {
             [DisplayName("Name")]

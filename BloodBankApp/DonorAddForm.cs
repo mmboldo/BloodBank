@@ -16,6 +16,7 @@ namespace BloodBankApp
     {
         public DonorAddForm()
         {
+            //loads the form
             InitializeComponent();
             this.Load += DonorAddForm_Load;
             buttonSubmit.Click += ButtonSubmit_Click;
@@ -29,7 +30,9 @@ namespace BloodBankApp
         private void ButtonSubmit_Click(object sender, EventArgs e)
         {
             BloodBankEntities context = new BloodBankEntities();
+            //get id for new donor
             int id = context.Donors.Count() + 1;
+            //create new donor object
             Donor donor = new Donor()
             {
                 DonorId = id,
@@ -40,7 +43,7 @@ namespace BloodBankApp
                 DonorPhone = numericUpDown1.Value.ToString(),
                 BloodTypeId = listBoxBloodType.SelectedIndex + 1,
             };
-            
+            //validation
             if (!(listBoxBloodType.SelectedItem is BloodType type))
             {
                 MessageBox.Show("Must select a blood type!");
@@ -56,6 +59,7 @@ namespace BloodBankApp
                 MessageBox.Show("Email is not valid");
                 return;
             }
+            //add to db
             if (Controller<BloodBankEntities, Donor>.AddEntity(donor) == null)
             {
                 MessageBox.Show("Cannot add course to database");
