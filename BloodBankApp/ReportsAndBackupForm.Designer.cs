@@ -42,9 +42,10 @@
             // 
             // buttonbackup
             // 
-            this.buttonbackup.Location = new System.Drawing.Point(539, 721);
+            this.buttonbackup.Location = new System.Drawing.Point(359, 469);
+            this.buttonbackup.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.buttonbackup.Name = "buttonbackup";
-            this.buttonbackup.Size = new System.Drawing.Size(148, 52);
+            this.buttonbackup.Size = new System.Drawing.Size(99, 34);
             this.buttonbackup.TabIndex = 3;
             this.buttonbackup.Text = "Backup";
             this.buttonbackup.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -55,9 +56,10 @@
             this.labelShowTotalDepositedBlood.AutoSize = true;
             this.labelShowTotalDepositedBlood.BackColor = System.Drawing.SystemColors.ControlLight;
             this.labelShowTotalDepositedBlood.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.labelShowTotalDepositedBlood.Location = new System.Drawing.Point(40, 41);
+            this.labelShowTotalDepositedBlood.Location = new System.Drawing.Point(27, 27);
+            this.labelShowTotalDepositedBlood.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelShowTotalDepositedBlood.Name = "labelShowTotalDepositedBlood";
-            this.labelShowTotalDepositedBlood.Size = new System.Drawing.Size(111, 22);
+            this.labelShowTotalDepositedBlood.Size = new System.Drawing.Size(75, 15);
             this.labelShowTotalDepositedBlood.TabIndex = 5;
             this.labelShowTotalDepositedBlood.Text = "Blood Deposit";
             // 
@@ -66,9 +68,10 @@
             this.labelShowBloodWithdrawal.AutoSize = true;
             this.labelShowBloodWithdrawal.BackColor = System.Drawing.SystemColors.ControlLight;
             this.labelShowBloodWithdrawal.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.labelShowBloodWithdrawal.Location = new System.Drawing.Point(32, 277);
+            this.labelShowBloodWithdrawal.Location = new System.Drawing.Point(21, 180);
+            this.labelShowBloodWithdrawal.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelShowBloodWithdrawal.Name = "labelShowBloodWithdrawal";
-            this.labelShowBloodWithdrawal.Size = new System.Drawing.Size(134, 22);
+            this.labelShowBloodWithdrawal.Size = new System.Drawing.Size(92, 15);
             this.labelShowBloodWithdrawal.TabIndex = 6;
             this.labelShowBloodWithdrawal.Text = "Blood Withdrawal";
             // 
@@ -77,48 +80,52 @@
             this.labelTotalAvailableBlood.AutoSize = true;
             this.labelTotalAvailableBlood.BackColor = System.Drawing.SystemColors.ControlLight;
             this.labelTotalAvailableBlood.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.labelTotalAvailableBlood.Location = new System.Drawing.Point(28, 490);
+            this.labelTotalAvailableBlood.Location = new System.Drawing.Point(19, 318);
+            this.labelTotalAvailableBlood.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelTotalAvailableBlood.Name = "labelTotalAvailableBlood";
-            this.labelTotalAvailableBlood.Size = new System.Drawing.Size(119, 22);
+            this.labelTotalAvailableBlood.Size = new System.Drawing.Size(82, 15);
             this.labelTotalAvailableBlood.TabIndex = 7;
             this.labelTotalAvailableBlood.Text = "Available Blood";
             // 
             // dataGridViewBloodDeposited
             // 
             this.dataGridViewBloodDeposited.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewBloodDeposited.Location = new System.Drawing.Point(32, 66);
+            this.dataGridViewBloodDeposited.Location = new System.Drawing.Point(21, 43);
+            this.dataGridViewBloodDeposited.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.dataGridViewBloodDeposited.Name = "dataGridViewBloodDeposited";
             this.dataGridViewBloodDeposited.RowHeadersWidth = 62;
             this.dataGridViewBloodDeposited.RowTemplate.Height = 28;
-            this.dataGridViewBloodDeposited.Size = new System.Drawing.Size(1015, 194);
+            this.dataGridViewBloodDeposited.Size = new System.Drawing.Size(677, 126);
             this.dataGridViewBloodDeposited.TabIndex = 8;
             // 
             // dataGridViewBloodWithdrawal
             // 
             this.dataGridViewBloodWithdrawal.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewBloodWithdrawal.Location = new System.Drawing.Point(28, 302);
+            this.dataGridViewBloodWithdrawal.Location = new System.Drawing.Point(19, 196);
+            this.dataGridViewBloodWithdrawal.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.dataGridViewBloodWithdrawal.Name = "dataGridViewBloodWithdrawal";
             this.dataGridViewBloodWithdrawal.RowHeadersWidth = 62;
             this.dataGridViewBloodWithdrawal.RowTemplate.Height = 28;
-            this.dataGridViewBloodWithdrawal.Size = new System.Drawing.Size(1019, 176);
+            this.dataGridViewBloodWithdrawal.Size = new System.Drawing.Size(679, 114);
             this.dataGridViewBloodWithdrawal.TabIndex = 9;
             // 
             // dataGridViewAvailableBlood
             // 
             this.dataGridViewAvailableBlood.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewAvailableBlood.Location = new System.Drawing.Point(28, 515);
+            this.dataGridViewAvailableBlood.Location = new System.Drawing.Point(19, 335);
+            this.dataGridViewAvailableBlood.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.dataGridViewAvailableBlood.Name = "dataGridViewAvailableBlood";
             this.dataGridViewAvailableBlood.RowHeadersWidth = 62;
             this.dataGridViewAvailableBlood.RowTemplate.Height = 28;
-            this.dataGridViewAvailableBlood.Size = new System.Drawing.Size(1019, 185);
+            this.dataGridViewAvailableBlood.Size = new System.Drawing.Size(679, 120);
             this.dataGridViewAvailableBlood.TabIndex = 10;
             // 
             // ReportsAndBackupForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(1233, 785);
+            this.ClientSize = new System.Drawing.Size(822, 510);
             this.Controls.Add(this.dataGridViewAvailableBlood);
             this.Controls.Add(this.dataGridViewBloodWithdrawal);
             this.Controls.Add(this.dataGridViewBloodDeposited);
@@ -126,8 +133,9 @@
             this.Controls.Add(this.labelShowBloodWithdrawal);
             this.Controls.Add(this.labelShowTotalDepositedBlood);
             this.Controls.Add(this.buttonbackup);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "ReportsAndBackupForm";
-            this.Text = "ReportsAndBackupForm";
+            this.Text = "Reports and Backup";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewBloodDeposited)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewBloodWithdrawal)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewAvailableBlood)).EndInit();

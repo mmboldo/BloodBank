@@ -1,4 +1,5 @@
 ﻿using BloodBankCodeFirstFromDB;
+using EFControllerUtilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -29,10 +30,13 @@ namespace BloodBankApp
             labelPhoneNumber.Text = BloodBankAppMainForm.SetMakeADonationPhoneNumber;
             labelBloodType.Text = BloodBankAppMainForm.SetMakeADonationBloodType;
             labelBloodTypePrice.Text = Math.Round(GetBloodTypePrice(BloodBankAppMainForm.SetMakeADonationBloodType), 2).ToString() + ",00";
+            initializeBankBalance();
 
             buttonCalculateTotal.Click += ButtonCalculateTotal_click;
 
-            // Context... make donation
+            BloodBankAppMainForm main = new BloodBankAppMainForm();
+            this.FormClosed += (s, e) => main.initializeBankBalance();
+
         }
 
         // Gets the Blood type price to populate the label
@@ -54,6 +58,33 @@ namespace BloodBankApp
             Double.TryParse(textBoxDonatedBloodVolume.Text, out donatedVolume);
             double pricePerUnit = GetBloodTypePrice(BloodBankAppMainForm.SetMakeADonationBloodType);
             labelTotalDonationPrice.Text = (donatedVolume * pricePerUnit / 500).ToString();
+        }
+
+        private void initializeBankBalance()
+        {
+            List<Donation> donations = Controller<BloodBankEntities, Donation>.SetBindingList().ToList();
+            List<BloodWithdrawal> withdrawals = Controller<BloodBankEntities, BloodWithdrawal>.SetBindingList().ToList();
+            List<BloodType> bloodTypes = Controller<BloodBankEntities, BloodType>.SetBindingList().ToList();
+            decimal depositBalance = 0;
+            decimal withdrawalBalance = 0;
+            foreach (Donation d in donations)
+            {
+                float volume = d.DonationBloodVolume;
+                float ppu = 0;
+                foreach (BloodType b in bloodTypes)
+                {
+                    if (d.BloodTypeId == b.BloodTypeId)
+                    {
+                        ppu = b.PricePerUnit;
+                    }
+                }
+                depositBalance += Decimal.Parse((volume * ppu).ToString());
+            }
+            foreach (BloodWithdrawal b in withdrawals)
+            {
+                withdrawalBalance += Decimal.Parse(b.TransactionValue.ToString());
+            }
+            labelCurrentBalance.Text = (depositBalance - withdrawalBalance).ToString();            
         }
     }
 }

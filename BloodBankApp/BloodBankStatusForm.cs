@@ -51,8 +51,8 @@ namespace BloodBankApp
             }
             textBoxDeposits.Text = depositBalance.ToString();
             textBoxWithdrawals.Text = withdrawalBalance.ToString();
-
         }
+
         //create DGV for donations
         private void initializeDonationDGV()
         {
@@ -97,6 +97,7 @@ namespace BloodBankApp
             dataGridViewDonations.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             
         }
+
         private void initializeDepositDGV()
         {
             List<DisplayDeposit> displayDeposit = new List<DisplayDeposit>();
@@ -196,6 +197,7 @@ namespace BloodBankApp
             [DisplayName("Donation Date")]
             public string displayDonationDate { get; set; }
         }
+
         private class DisplayDeposit
         {
             [DisplayName("Deposit ID")]
@@ -209,6 +211,7 @@ namespace BloodBankApp
             [DisplayName("Blood Type")]
             public string displayBloodType { get; set; }
         }
+
         private class DisplayWithdrawal
         {
             [DisplayName("Withdrawal ID")]
@@ -222,9 +225,6 @@ namespace BloodBankApp
             public string displayTransValue { get; set; }
             [DisplayName("Quantity")]
             public string displayQuantity { get; set; }
-
-
-
         }
     }
 }

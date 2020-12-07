@@ -36,14 +36,17 @@ namespace BloodBankApp
             // search button on the main page
             buttonSearchDonor.Click += ButtonSearchDonor_Click;
 
+            // Creating the forms
             DonorAddForm donorAddForm = new DonorAddForm();
             buttonAddNewDonor.Click += (s, e) => AddOrUpdateForm<Donor>(dataGridViewDonorsDatabase, donorAddForm);
-
             BloodBankStatusForm bbStatForm = new BloodBankStatusForm();
             buttonBloodBank.Click += (s, e) => AddOrUpdateForm<BloodBankEntities>(null, bbStatForm);
-
             WithdrawalForm withdraw = new WithdrawalForm();
             buttonWithdrawBlood.Click += (s, e) => AddOrUpdateForm<BloodWithdrawal>(dataGridViewDonorsDatabase, withdraw);
+
+
+            // Getting the current balance
+            initializeBankBalance();
 
             //Searching the donor through textboxes
             buttonReset.Click += ButtonReset_Click;
@@ -77,7 +80,7 @@ namespace BloodBankApp
         // Takes the user to the Make Donation Form
         private void ButtonMakeDonation_Click(object sender, EventArgs e)
         {
-            // values 
+            // A donor needs to be selected to go to the Make a Donation Form
             if (dataGridViewDonorsDatabase.SelectedRows == null)
             {
                 MessageBox.Show("You must first select a donor.");
@@ -103,28 +106,40 @@ namespace BloodBankApp
             textBoxLastName.Clear();
         }
 
-        // Don't think this should be textChanged. It should be button click
-        private void TextBoxFirstName_TextChanged(object sender, EventArgs e)
-        {
-            BloodBankEntities bloodBankEntities = new BloodBankEntities();
-
-            //BindingSource bindingSource = new BindingSource();
-            //bindingSource.DataSource = dataGridViewDonors.DataSource;
-            //bindingSource.Filter = "DonorFirstName like '" + textBoxFirstName.Text + "%'";
-            dataGridViewSearchResult.DataSource = bloodBankEntities.Donors.Where(x => x.DonorFirstName
-                                                    .Contains(textBoxFirstName.Text));
-        }
-
-        private void getBloodType(List<BloodType> bloodTypes)
-        {
-
-        }
-
         /// <summary>
         /// Initializes the Donor Database Data Grid View with the data from the tables Donor and Blood Type
         /// It reads from the contents of Donor and BloodType, instantiates a new DisplayDonor object and adds it to the 
         /// DisplayDonor list. 
         /// </summary>
+        /// 
+
+        public void initializeBankBalance()
+        {
+            List<Donation> donations = Controller<BloodBankEntities, Donation>.SetBindingList().ToList();
+            List<BloodWithdrawal> withdrawals = Controller<BloodBankEntities, BloodWithdrawal>.SetBindingList().ToList();
+            List<BloodType> bloodTypes = Controller<BloodBankEntities, BloodType>.SetBindingList().ToList();
+            decimal depositBalance = 0;
+            decimal withdrawalBalance = 0;
+            foreach (Donation d in donations)
+            {
+                float volume = d.DonationBloodVolume;
+                float ppu = 0;
+                foreach (BloodType b in bloodTypes)
+                {
+                    if (d.BloodTypeId == b.BloodTypeId)
+                    {
+                        ppu = b.PricePerUnit;
+                    }
+                }
+                depositBalance += Decimal.Parse((volume * ppu).ToString());
+            }
+            foreach (BloodWithdrawal b in withdrawals)
+            {
+                withdrawalBalance += Decimal.Parse(b.TransactionValue.ToString());
+            }
+            labelCurrentFunds.Text = (depositBalance - withdrawalBalance).ToString() + ",00";
+        }
+
         private void initializeDonorsDataGridView()
         {                
                 List<DisplayDonor> displayDonor = new List<DisplayDonor>();
@@ -251,119 +266,6 @@ namespace BloodBankApp
             }
         }
 
-        // Probably not going to be used.
-        private void DisplaySelectedDonors()
-        {
-                // ==XX==XX== DISPLAY selected donor on the Data Grid View. 
-                // create dataset to store selected donors to display
-                DataTable donorsColumns = new DataTable();
-                donorsColumns.Columns.Add("DonorId");
-                donorsColumns.Columns.Add("DonorFirstName");
-                donorsColumns.Columns.Add("DonorLastName");
-                donorsColumns.Columns.Add("DonorBirthday");
-                donorsColumns.Columns.Add("DonorAddress");
-                donorsColumns.Columns.Add("DonorPhone");
-                donorsColumns.Columns.Add("BloodTypeId");
-
-                foreach (DataGridViewRow dataGridViewRow in dataGridViewDonorsDatabase.SelectedRows)
-                {
-                    if (dataGridViewDonorsDatabase.SelectedRows.Count > 0)
-                    {
-                        donorsColumns.Rows.Add(dataGridViewRow.Cells[0].Value, dataGridViewRow.Cells[1].Value, dataGridViewRow.Cells[2].Value,
-                        dataGridViewRow.Cells[3].Value, dataGridViewRow.Cells[4].Value,
-                        dataGridViewRow.Cells[5].Value, dataGridViewRow.Cells[6].Value);
-                    }
-                }
-                dataGridViewSearchResult.DataSource = donorsColumns; // add selected donors to the datagridview
-        }
-
-        /// <summary>
-        /// Common generic method to initialize datagridview controls. Allows users to add and delete data,
-        /// sets the datasource, autosizes the control to the columns.
-        /// <para>
-        /// A list of columns to hide is an optional parameter. No error checking is done on this.
-        /// </para>
-        /// <para>
-        /// We could use a form to delete items, but easy to use gridview for this, so set up 
-        /// UserDeletingRow event. If we use UserDeletedRow, it is already gone! We need to use
-        /// UserDeletingRow because we can't simply do savechanges - the item needs to be explicitly
-        /// deleted.
-        /// </para>
-        /// </summary>
-        /// <typeparam name="T">Data type associated with the gridview</typeparam>
-        /// <param name="gridView">DataGridView to be initialized</param>
-        /// <param name="columnsToHide">Columns to be hidden in the DataGridView</param>
-        private void InitializeDataGridView<T>(DataGridView gridView, params string[] columnsToHide) where T : class
-        {
-            // Allow users to add/delete rows, and fill out columns to the entire width of the control
-            gridView.AllowUserToAddRows = false;
-
-            gridView.AllowUserToDeleteRows = true;
-            gridView.ReadOnly = true;
-            gridView.MultiSelect = false;
-            gridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-
-            // set the handler used to delete an item. Note use of generics.
-            gridView.UserDeletingRow += (s, e) => DeletingRow<T>(s as DataGridView, e);
-
-            // probably not needed, but just in case we have some issues
-            gridView.DataError += (s, e) => HandleDataError<T>(s as DataGridView, e);
-
-            gridView.DataSource = Controller<BloodBankEntities, T>.SetBindingList();
-
-            //foreach (string column in columnsToHide)
-            //    gridView.Columns[column].Visible = false;
-        }
-
-        /// <summary>
-        /// Handler to delete the selected row (item) from a gridview and update the DB.
-        /// Update the gridview with the revised data from the DB, as well
-        /// as the customer orders report gridview.
-        /// </summary>
-        /// <typeparam name="T">Data type associated with the gridview</typeparam>
-        /// <param name="dataGridView">DataGridView used to delete the row</param>
-        /// <param name="e"></param>
-        private void DeletingRow<T>(DataGridView dataGridView, DataGridViewRowCancelEventArgs e) where T : class
-        {
-            // get the item
-            T item = e.Row.DataBoundItem as T;
-
-            Debug.WriteLine("DeletingRow " + e.Row.Index + " entity " + typeof(T) + " " + item);
-
-            // Delete the item in the DB. No need to worry about dependencies, as there is no context!
-            // Just let cascade delete take care of it.
-            Controller<BloodBankEntities, T>.DeleteEntity(item);
-            dataGridView.Refresh();
-
-            // The Orders table always gets updated, this forces the update from the DB.
-            // It will show the effect of cascade delete in the DB.
-
-            //if (typeof(T) != typeof(Order))
-            //{
-            //    dataGridViewOrders.DataSource = Controller<AutoLotEntities, Order>.Set();
-            //    dataGridViewOrders.Refresh();
-            //}
-
-            //// update the customer orders report
-
-            //dataGridViewCustomerOrders.DataSource = Controller<AutoLotEntities, CustomerOrder>.GetEntitiesNoTracking();
-            //dataGridViewCustomerOrders.Refresh();
-        }
-
-        /// <summary>
-        /// Catch any gridview data error, log to debug and cancel any event.
-        /// Should not happen, as all of our gridviews are readonly. Might show up when items
-        /// are deleted.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="gridView"></param>
-        /// <param name="e"></param>
-        private void HandleDataError<T>(DataGridView gridView, DataGridViewDataErrorEventArgs e)
-        {
-            Debug.WriteLine("DataError " + typeof(T) + " " + gridView.Name + " row " + e.RowIndex + " col " + e.ColumnIndex + " Context: " + e.Context.ToString());
-            e.Cancel = true;
-        }
-
         /// <summary>
         /// Generic method to display a form and then update the relevant gridviews.
         /// </summary>
@@ -378,15 +280,8 @@ namespace BloodBankApp
             if (result == DialogResult.OK)
             {
                 // update the gridview
-                initializeDonorsDataGridView();
-               
+                initializeDonorsDataGridView();               
             }
-
-            // do not close, as the form object will be disposed, 
-            // just hide the form (make it invisible). 
-            // 
-            // when the inputForm is opened again (ShowDialog()), the Load event will fire
-            //  and the form will be reinitialized
 
             form.Hide();
         }
