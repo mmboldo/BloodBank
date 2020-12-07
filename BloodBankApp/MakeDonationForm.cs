@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BloodBankCodeFirstFromDB;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -16,6 +17,7 @@ namespace BloodBankApp
         {
             InitializeComponent();
             this.Load += (s, e) => MakeDoationForm_Load();
+            //labelTotalDonationPrice.TextChanged += (s, e) => TextBoxDonatedBloodVolume_TextChanged();
         }
 
         private void MakeDoationForm_Load()
@@ -26,10 +28,32 @@ namespace BloodBankApp
             labelEmail.Text = BloodBankAppMainForm.SetMakeADonationEmail;
             labelPhoneNumber.Text = BloodBankAppMainForm.SetMakeADonationPhoneNumber;
             labelBloodType.Text = BloodBankAppMainForm.SetMakeADonationBloodType;
-            
-            // calculate the value based on the qty of ml donated and the price per ml of the blood type
+            labelBloodTypePrice.Text = Math.Round(GetBloodTypePrice(BloodBankAppMainForm.SetMakeADonationBloodType), 2).ToString() + ",00";
+
+            buttonCalculateTotal.Click += ButtonCalculateTotal_click;
 
             // Context... make donation
+        }
+
+        // Gets the Blood type price to populate the label
+        private double GetBloodTypePrice(String bloodType)
+        {
+            var bloodTypePrice = 0.0;
+            using (BloodBankEntities context = new BloodBankEntities())
+            {
+                var b = context.BloodTypes.Single(x => x.BloodType1 == bloodType);
+                bloodTypePrice = b.PricePerUnit;
+            }
+            return bloodTypePrice;
+        }
+
+        // Calculate button click event: calculates the donation monetary value based on the donated blood volume and the price per ml of the blood type
+        private void ButtonCalculateTotal_click(object sender, EventArgs e)
+        {
+            double donatedVolume = 0.0;
+            Double.TryParse(textBoxDonatedBloodVolume.Text, out donatedVolume);
+            double pricePerUnit = GetBloodTypePrice(BloodBankAppMainForm.SetMakeADonationBloodType);
+            labelTotalDonationPrice.Text = (donatedVolume * pricePerUnit / 500).ToString();
         }
     }
 }
