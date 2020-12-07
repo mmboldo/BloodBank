@@ -127,6 +127,9 @@
     <EmbeddedResource Include="ReportsAndBackupForm.resx">
       <DependentUpon>ReportsAndBackupForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="WithdrawalForm.resx">
+      <DependentUpon>WithdrawalForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

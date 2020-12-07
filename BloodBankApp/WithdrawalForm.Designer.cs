@@ -116,7 +116,7 @@
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label1);
             this.Name = "WithdrawalForm";
-            this.Text = "WithdrawalForm";
+            this.Text = "New Withdrawal";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewStock)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewClient)).EndInit();
             this.ResumeLayout(false);

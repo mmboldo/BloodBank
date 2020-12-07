@@ -61,6 +61,7 @@ namespace BloodBankApp
             //creates a new BloodWithdrawalUnit object
             BloodWithdrawalUnit bwu = new BloodWithdrawalUnit()
             {
+                BloodWithdrawalUnitsId = context.BloodWithdrawalUnits.Count() + 1,
                 UnitId = Int32.Parse(dataGridViewStock.SelectedRows[0].Cells[0].Value.ToString()),
                 BloodWithdrawalId = context.BloodWithdrawals.Count(),
             };

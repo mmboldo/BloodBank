@@ -174,7 +174,7 @@
             this.Controls.Add(this.dataGridViewDonations);
             this.Controls.Add(this.dataGridViewStock);
             this.Name = "BloodBankStatusForm";
-            this.Text = "BloodBankStatus";
+            this.Text = "Blood Bank Status";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewStock)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewDonations)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewWithdrawals)).EndInit();
