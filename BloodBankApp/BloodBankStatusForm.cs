@@ -78,8 +78,10 @@ namespace BloodBankApp
             List<DisplayDeposit> displayDeposit = new List<DisplayDeposit>();
             List<BloodDeposit> bloodDeposit = Controller<BloodBankEntities, BloodDeposit>.SetBindingList().ToList();
             List<BloodType> bloodTypes = Controller<BloodBankEntities, BloodType>.SetBindingList().ToList();
+            List<BloodWithdrawalUnit> bwus = Controller<BloodBankEntities, BloodWithdrawalUnit>.SetBindingList().ToList();
             foreach (BloodDeposit b in bloodDeposit)
             {
+                int isStocked = 1;
                 string depositBloodType = "";
                 //get blood type from id
                 foreach (BloodType bloodType in bloodTypes)
@@ -89,7 +91,14 @@ namespace BloodBankApp
                         depositBloodType = bloodType.BloodType1;
                     }
                 }
-
+                //check if deposit has been withdrawn
+                foreach (BloodWithdrawalUnit bwu in bwus)
+                {
+                    if (bwu.UnitId == b.UnitId)
+                    {
+                        isStocked = 0;
+                    }
+                }
                 DateTime expiryDate = b.UnitExpiryDate;
                 String date = expiryDate.ToShortDateString();
                 //round price to 2 decimals
@@ -102,7 +111,10 @@ namespace BloodBankApp
                     displayExpiryDate = date,
                     displayBloodType = depositBloodType,
                 };
-                displayDeposit.Add(dd);
+                if (isStocked == 1)
+                {
+                    displayDeposit.Add(dd);
+                }
             }
             //add to DGV
             dataGridViewStock.DataSource = displayDeposit;
