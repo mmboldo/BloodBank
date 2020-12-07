@@ -106,6 +106,9 @@
     <EmbeddedResource Include="BloodBankAppMainForm.resx">
       <DependentUpon>BloodBankAppMainForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="BloodBankStatusForm.resx">
+      <DependentUpon>BloodBankStatusForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DonorAddForm.resx">
       <DependentUpon>DonorAddForm.cs</DependentUpon>
     </EmbeddedResource>

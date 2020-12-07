@@ -27,6 +27,35 @@ namespace BloodBankApp
             initializeDepositDGV();
             initializeDonationDGV();
             initializeWithdrawalDGV();
+            initializeBankBalance();
+            textBoxBalance.Text = (Int32.Parse(textBoxWithdrawals.Text) - Int32.Parse(textBoxDeposits.Text)).ToString();
+        }
+        private void initializeBankBalance()
+        {
+            List<Donation> donations = Controller<BloodBankEntities, Donation>.SetBindingList().ToList();
+            List<BloodWithdrawal> withdrawals = Controller<BloodBankEntities, BloodWithdrawal>.SetBindingList().ToList();
+            List<BloodType> bloodTypes = Controller<BloodBankEntities, BloodType>.SetBindingList().ToList();
+            decimal depositBalance = 0;
+            decimal withdrawalBalance = 0;
+            foreach(Donation d in donations)
+            {
+                float volume = d.DonationBloodVolume;
+                float ppu = 0;
+                foreach(BloodType b in bloodTypes)
+                {
+                    if(d.BloodTypeId == b.BloodTypeId)
+                    {
+                        ppu = b.PricePerUnit;
+                    }
+                }
+                depositBalance += Decimal.Parse((volume * ppu).ToString());
+            }
+            foreach(BloodWithdrawal b in withdrawals)
+            {
+                withdrawalBalance += Decimal.Parse(b.TransactionValue.ToString());
+            }
+            textBoxDeposits.Text = depositBalance.ToString();
+            textBoxWithdrawals.Text = withdrawalBalance.ToString();
 
         }
         //create DGV for donations
