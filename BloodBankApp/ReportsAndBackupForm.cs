@@ -4,48 +4,54 @@ using EFControllerUtilities;
 using BloodBankCodeFirstFromDB;
 using DataTableAccessLayer;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.ComponentModel;
 
 namespace BloodBankApp
 {
-	public partial class ReportsAndBackupForm : Form
-	{
-		// field to keep the access layer field
+    public partial class ReportsAndBackupForm : Form
+    {
+        // field to keep the access layer field
 
-		private SqlDataAccessLayer bloodBankDB;
+        private SqlDataAccessLayer bloodBankDB;
 
-		// dataset will hold all tables being used
+        // dataset will hold all tables being used
 
-		private DataSet bloodBankDataSet;
+        private DataSet bloodBankDataSet;
 
 
-		public ReportsAndBackupForm()
-		{
-			InitializeComponent();
-			
-			bloodBankDB = new SqlDataAccessLayer();
+        public ReportsAndBackupForm()
+        {
+            InitializeComponent();
+            DataGridViewInitializeWithdrawal();
+            DataGridViewInitializeDepositedBlood();
+            DataGridViewInitializeAvailableBlood();
 
-			bloodBankDataSet = new DataSet()
-			{
-				// must be named for backup purposes
+            bloodBankDB = new SqlDataAccessLayer();
 
-				DataSetName = "BloodBankDataSet",
-			};
+            bloodBankDataSet = new DataSet()
+            {
+                // must be named for backup purposes
 
-			// get the connection string from App.config
+                DataSetName = "BloodBankDataSet",
+            };
 
-			string connectionString = bloodBankDB.GetConnectionString("BloodBankConnection");
-			bloodBankDB.OpenConnection(connectionString);
+            // get the connection string from App.config
+
+            string connectionString = bloodBankDB.GetConnectionString("BloodBankConnection");
+            bloodBankDB.OpenConnection(connectionString);
             // Initialise the DataGridViews and DataSets
 
-            InitializeDataGridViewAndDataSet(dataGridViewBloodDeposited, bloodBankDataSet, "BloodDeposit");
-            InitializeDataGridViewAndDataSet(dataGridViewBloodWithdrawal, bloodBankDataSet, "BloodWithdrawals");
-            InitializeDataGridViewAndDataSet(dataGridViewAvailableBlood, bloodBankDataSet, "BloodTypes");
-
-            
+            //InitializeDataGridViewAndDataSet(dataGridViewBloodDeposited, bloodBankDataSet, "BloodDeposit");
+            //InitializeDataGridViewAndDataSet(dataGridViewBloodWithdrawal, bloodBankDataSet, "BloodWithdrawals");
+            //InitializeDataGridViewAndDataSet(dataGridViewAvailableBlood, bloodBankDataSet, "BloodTypes");
+            List<BloodWithdrawal> withdrawals = Controller<BloodBankEntities, BloodWithdrawal>.SetBindingList().ToList();
+            List<Donor> donors = Controller<BloodBankEntities, Donor>.SetBindingList().ToList();
 
             // add button event handlers for database backup to xml
             buttonbackup.Click += (s, e) => bloodBankDB.BackupDataSetToXML(bloodBankDataSet);
-           // buttonRestoreDatabaseFromBackup.Click += (s, e) => registrationDB.RestoreDataSetFromBackup(registrationDataSet);
+            // buttonRestoreDatabaseFromBackup.Click += (s, e) => registrationDB.RestoreDataSetFromBackup(registrationDataSet);
 
             //close connection
             this.FormClosing += (s, e) => bloodBankDB.CloseConnection();
@@ -61,7 +67,7 @@ namespace BloodBankApp
             // get the table filled with records from the db
 
             DataTable table = bloodBankDB.GetDataTable(tableName);
-            
+
 
             // set the datasource to the table.
             // when the control changes, the table will change as well with one of the events below.
@@ -95,7 +101,7 @@ namespace BloodBankApp
             // allow multiple select to allow for deletion of multiple rows
 
             dataGridView.MultiSelect = true;
-            
+
 
             // add the table to the Tables collection.
             // This is only used for backup and restore
@@ -118,7 +124,7 @@ namespace BloodBankApp
         //{
         //    try
         //    {
-               // dataGridView.AllowUserToDeleteRows = false;
+        // dataGridView.AllowUserToDeleteRows = false;
         //        bloodBankDB.DeleteTableRow(e.Row);
         //    }
         //    catch (Exception ex)
@@ -211,7 +217,198 @@ namespace BloodBankApp
             //registrationDB.LoadDataTable(dataGridViewDepartmentMajorsCount.DataSource as DataTable);
         }
 
-       
+        /// <summary>
+        /// Created list from the class and various tables used in fetching values
+        /// get value through foreach loop
+        /// saved it in array of type class
+        /// showed in deposit datagridview
+        /// </summary>
+        private void DataGridViewInitializeDepositedBlood()
+        {
+            List<DisplayDeposited> displayDeposited = new List<DisplayDeposited>();
+            List<Donor> donor = Controller<BloodBankEntities, Donor>.SetBindingList().ToList();
+            List<Donation> donation = Controller<BloodBankEntities, Donation>.SetBindingList().ToList();
+            List<BloodType> bloodTypes = Controller<BloodBankEntities, BloodType>.SetBindingList().ToList();
+
+           
+            foreach (Donation d in donation)
+            {
+                string bloodTypeString = "";
+               
+                //get blood type name from id
+                foreach (BloodType type in bloodTypes)
+                {
+                    if (d.BloodTypeId == type.BloodTypeId)
+                    {
+                        bloodTypeString = type.BloodType1;
+                    }
+                }
+                DateTime depositedDate = d.DonationDate;
+                String date = depositedDate.ToShortDateString();
+
+                float volume = d.DonationBloodVolume;
+                DisplayDeposited dd = new DisplayDeposited()
+                {
+                    
+                    displayBloodType = bloodTypeString,
+                    displayDepositedDate = date,
+                    displayQuantity = volume.ToString(),
+
+                };
+                displayDeposited.Add(dd);
+
+            }
+            dataGridViewBloodDeposited.DataSource = displayDeposited;
+            dataGridViewBloodDeposited.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridViewBloodDeposited.MultiSelect = true;
+            dataGridViewBloodDeposited.AllowUserToDeleteRows = false;
+        }
+
+        /// <summary>
+        /// Created list from the class and various tables used in fetching values
+        /// get value through foreach loop
+        /// saved it in array of type class
+        /// showed in Available datagridview
+        /// </summary>
+        private void DataGridViewInitializeAvailableBlood()
+        {
+            List<DisplayAvailable> displayAvailable = new List<DisplayAvailable>();
+            List<BloodDeposit> deposit = Controller<BloodBankEntities, BloodDeposit>.SetBindingList().ToList();
+            List<Donation> donation = Controller<BloodBankEntities, Donation>.SetBindingList().ToList();
+            List<BloodType> bloodTypes = Controller<BloodBankEntities, BloodType>.SetBindingList().ToList();
+
+
+            foreach (BloodDeposit d in deposit)
+            {
+                string bloodTypeString = "";
+                float volume;
+                //get blood type name from id
+                foreach (BloodType type in bloodTypes)
+                {
+                    if (d.BloodTypeId == type.BloodTypeId)
+                    {
+                        bloodTypeString = type.BloodType1;
+                    }
+                }
+                DateTime expiryDate = d.UnitExpiryDate;
+                String date = expiryDate.ToShortDateString();
+
+                foreach(Donation don in donation)
+                {
+                    volume = don.DonationBloodVolume;
+                
+
+                DisplayAvailable da = new DisplayAvailable()
+                {
+                    displayBloodTypeAvailable = bloodTypeString,
+                    displayExpiryDate = date,
+                    displayQuantityAvailable = volume.ToString(),
+
+                };
+                displayAvailable.Add(da);
+                }
+            }
+            dataGridViewAvailableBlood.DataSource = displayAvailable;
+            dataGridViewAvailableBlood.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridViewAvailableBlood.MultiSelect = true;
+            dataGridViewAvailableBlood.AllowUserToDeleteRows = false;
+        }
+
+        /// <summary>
+        /// Created list from the class and various tables used in fetching values
+        /// get value through foreach loop
+        /// saved it in array of type class
+        /// showed in withdrawal datagridview
+        /// </summary>
+        private void DataGridViewInitializeWithdrawal()
+        {
+            List<DisplayWithdrawal> displayWithdrawal = new List<DisplayWithdrawal>();
+            List<BloodWithdrawal> bloodWithdrawal = Controller<BloodBankEntities, BloodWithdrawal>.SetBindingList().ToList();
+            List<Client> clients = Controller<BloodBankEntities, Client>.SetBindingList().ToList();
+            foreach (BloodWithdrawal b in bloodWithdrawal)
+            {
+                string clientName = "";
+
+                //get client name from id
+                foreach (Client client in clients)
+                {
+                    if (client.ClientId == b.ClientId)
+                    {
+                        clientName = client.ClientLastName + ", " + client.ClientFirstName;
+                    }
+                }
+
+                DateTime withdrawalDate = b.BloodWithdrawalDate;
+                String date = withdrawalDate.ToShortDateString();
+                //round prices to 2 decimals
+                decimal cost = Math.Round(Decimal.Parse(b.TransactionValue.ToString()), 2);
+                //create display object
+                DisplayWithdrawal dw = new DisplayWithdrawal()
+                {
+                    displayWithdrawalId = b.BloodWithdrawalId.ToString(),
+                    displayClientName = clientName,
+                    displayWithdrawalDate = date,
+                    displayTransValue = cost.ToString(),
+                    displayQuantity = b.UnitQuantity.ToString(),
+                };
+                displayWithdrawal.Add(dw);
+            }
+            //add objects to DGV
+            dataGridViewBloodWithdrawal.DataSource = displayWithdrawal;
+            dataGridViewBloodWithdrawal.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridViewBloodWithdrawal.MultiSelect = true;
+            dataGridViewBloodWithdrawal.AllowUserToDeleteRows = false;
+        }
+
+        /// <summary>
+        /// Class to display withdrawal blood
+        /// </summary>
+        private class DisplayWithdrawal
+        {
+            [DisplayName("Withdrawal ID")]
+            public string displayWithdrawalId { get; set; }
+            [DisplayName("Client Name")]
+            public string displayClientName { get; set; }
+
+            [DisplayName("Withdrawal Date")]
+            public string displayWithdrawalDate { get; set; }
+            [DisplayName("Transaction Value")]
+            public string displayTransValue { get; set; }
+            [DisplayName("Quantity")]
+            public string displayQuantity { get; set; }
+
+        }
+        /// <summary>
+        /// Class to display deposited blood 
+        /// </summary>
+
+        private class DisplayDeposited
+        {
+         
+            [DisplayName("Blood Type")]
+            public string displayBloodType { get; set; }
+
+            [DisplayName("Deposited Date")]
+            public string displayDepositedDate { get; set; }
+
+            [DisplayName("Quantity")]
+            public string displayQuantity { get; set; }
+        }
+
+        /// <summary>
+        /// Class to display Available Blood
+        /// </summary>
+        private class DisplayAvailable
+        {
+            [DisplayName("Blood Type")]
+            public string displayBloodTypeAvailable { get; set; }
+
+            [DisplayName("Expiry Date")]
+            public string displayExpiryDate { get; set; }
+
+            [DisplayName("Quantity")]
+            public string displayQuantityAvailable { get; set; }
+        }
     }
 }
 		
