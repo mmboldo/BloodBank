@@ -61,14 +61,11 @@ INSERT INTO [dbo].[BloodDeposit] ([UnitId], [UnitPrice], [UnitExpiryDate], [Bloo
 GO
 
 
-
-
 INSERT INTO [dbo].[BloodWithdrawals] ([BloodWithdrawalId], [BloodWithdrawalDate], [TransactionValue], [UnitQuantity], [ClientId]) VALUES (1, '12/23/2019', '892.00', 2, '4');
 INSERT INTO [dbo].[BloodWithdrawals] ([BloodWithdrawalId], [BloodWithdrawalDate], [TransactionValue], [UnitQuantity], [ClientId]) VALUES (2, '3/21/2020', '794.60', 2, '3');
 INSERT INTO [dbo].[BloodWithdrawals] ([BloodWithdrawalId], [BloodWithdrawalDate], [TransactionValue], [UnitQuantity], [ClientId]) VALUES (3, '4/22/2020', '805.85', 1, '9');
 INSERT INTO [dbo].[BloodWithdrawals] ([BloodWithdrawalId], [BloodWithdrawalDate], [TransactionValue], [UnitQuantity], [ClientId]) VALUES (4, '9/23/2020', '989.01', 1, '10');
-INSERT INTO [dbo].[BloodWithdrawals] ([BloodWithdrawalId], [BloodWithdrawalDate], [TransactionValue], [UnitQuantity], [ClientId]) VALUES (7, '4/19/2020', '692.95', 2, '5');
-
+INSERT INTO [dbo].[BloodWithdrawals] ([BloodWithdrawalId], [BloodWithdrawalDate], [TransactionValue], [UnitQuantity], [ClientId]) VALUES (5, '7/23/2020', '359.73', 2, '2');
 GO
 
 

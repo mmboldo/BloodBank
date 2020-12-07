@@ -103,11 +103,6 @@ namespace SeedDatabaseExtensions
                 new BloodWithdrawal{BloodWithdrawalId = 3, BloodWithdrawalDate = new DateTime(2018,3,13), TransactionValue = 500.00f, UnitQuantity = 1, ClientId = 6 },
                 new BloodWithdrawal{BloodWithdrawalId = 4, BloodWithdrawalDate = new DateTime(2020,6,4), TransactionValue = 400.00f, UnitQuantity = 1, ClientId = 4},
                 new BloodWithdrawal{BloodWithdrawalId = 5, BloodWithdrawalDate = new DateTime(2018,4,22), TransactionValue = 800.00f, UnitQuantity = 2, ClientId = 2 },
-                new BloodWithdrawal{BloodWithdrawalId = 6, BloodWithdrawalDate = new DateTime(2020,7,14), TransactionValue = 300.00f, UnitQuantity = 1, ClientId = 5 },
-                new BloodWithdrawal{BloodWithdrawalId = 7, BloodWithdrawalDate = new DateTime(2020,12,6), TransactionValue = 300.00f, UnitQuantity = 1, ClientId = 8 },
-                new BloodWithdrawal{BloodWithdrawalId = 8, BloodWithdrawalDate = new DateTime(2020,11,4), TransactionValue = 1000.00f, UnitQuantity = 2, ClientId = 10 },
-                new BloodWithdrawal{BloodWithdrawalId = 9, BloodWithdrawalDate = new DateTime(2019,1,31), TransactionValue = 450.00f, UnitQuantity = 1, ClientId = 7 },
-                new BloodWithdrawal{BloodWithdrawalId = 10, BloodWithdrawalDate = new DateTime(2020,5,2), TransactionValue = 500.00f, UnitQuantity = 1, ClientId = 6 },
             };
             Dictionary<int, BloodWithdrawal> bloodWithdrawals = bloodWithdrawalList.ToDictionary(x => x.BloodWithdrawalId, x => x);
             context.BloodWithdrawals.AddRange(bloodWithdrawalList);
@@ -138,12 +133,6 @@ namespace SeedDatabaseExtensions
                 new BloodWithdrawalUnit{BloodWithdrawalUnitsId = 3, UnitId = 3, BloodWithdrawalId= 3},
                 new BloodWithdrawalUnit{BloodWithdrawalUnitsId = 4, UnitId = 4, BloodWithdrawalId= 4},
                 new BloodWithdrawalUnit{BloodWithdrawalUnitsId = 5, UnitId = 5, BloodWithdrawalId= 5},
-                new BloodWithdrawalUnit{BloodWithdrawalUnitsId = 6, UnitId = 6, BloodWithdrawalId= 6},
-                new BloodWithdrawalUnit{BloodWithdrawalUnitsId = 7, UnitId = 7, BloodWithdrawalId= 7},
-                new BloodWithdrawalUnit{BloodWithdrawalUnitsId = 8, UnitId = 8, BloodWithdrawalId= 8},
-                new BloodWithdrawalUnit{BloodWithdrawalUnitsId = 9, UnitId = 9, BloodWithdrawalId= 9},
-                 new BloodWithdrawalUnit{BloodWithdrawalUnitsId = 10, UnitId = 10, BloodWithdrawalId= 10},
-
             };
             Dictionary<int, BloodWithdrawalUnit> bloodWithdrawalUnits = bloodWithdrawalUnitsList.ToDictionary(x => x.BloodWithdrawalUnitsId, x => x);
             context.BloodWithdrawalUnits.AddRange(bloodWithdrawalUnitsList);
