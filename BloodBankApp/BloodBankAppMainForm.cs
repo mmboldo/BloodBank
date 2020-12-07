@@ -29,14 +29,8 @@ namespace BloodBankApp
             {
                 context.SeedDatabase();
             }
-            // common setup for datagridview controls
-            //InitializeDataGridView<BloodDeposit>(dataGridView1, "UnitId" );
-            //InitializeDataGridView<BloodType>(dataGridView2, "BloodTypeId");
-            //InitializeDataGridView<BloodWithdrawal>(dataGridView3, "BloodWithdrawalId");
-            //InitializeDataGridView<BloodWithdrawalUnit>(dataGridView4 ,"BloodWithdrawalUnitsId");
-            //InitializeDataGridView<Client>(dataGridView5 ,"ClientId");
-            //InitializeDataGridView<Donation>(dataGridView6 ,"DonationId");
-            //InitializeDataGridView<Donor>(dataGridViewDonorsDatabase, "BloodTypes", "DonorId");      
+
+            // Initializes the first data grid view, which displays the donors database
             initializeDonorsDataGridView();           
 
             // search button on the main page
@@ -89,14 +83,14 @@ namespace BloodBankApp
                 MessageBox.Show("You must first select a donor.");
             } 
             else
-            {
+            { // used the data from the datagridview to be used in the form's labels
                 SetMakeADonationFullName = dataGridViewDonorsDatabase.CurrentRow.Cells[0].Value.ToString() + " " + dataGridViewDonorsDatabase.CurrentRow.Cells[1].Value.ToString();
                 SetMakeADonationEmail = dataGridViewDonorsDatabase.CurrentRow.Cells[2].Value.ToString();
                 SetMakeADonationBirthday = dataGridViewDonorsDatabase.CurrentRow.Cells[3].Value.ToString();
                 SetMakeADonationPhoneNumber = dataGridViewDonorsDatabase.CurrentRow.Cells[4].Value.ToString();
                 SetMakeADonationBloodType = dataGridViewDonorsDatabase.CurrentRow.Cells[5].Value.ToString();
             }
-
+            // instantiate the form object and displays it to the user
             MakeDonationForm makeDonationForm = new MakeDonationForm();
             makeDonationForm.Show();
         }
@@ -257,6 +251,7 @@ namespace BloodBankApp
             }
         }
 
+        // Probably not going to be used.
         private void DisplaySelectedDonors()
         {
                 // ==XX==XX== DISPLAY selected donor on the Data Grid View. 
