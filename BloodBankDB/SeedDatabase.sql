@@ -67,12 +67,7 @@ INSERT INTO [dbo].[BloodWithdrawals] ([BloodWithdrawalId], [BloodWithdrawalDate]
 INSERT INTO [dbo].[BloodWithdrawals] ([BloodWithdrawalId], [BloodWithdrawalDate], [TransactionValue], [UnitQuantity], [ClientId]) VALUES (2, '3/21/2020', '794.60', 2, '3');
 INSERT INTO [dbo].[BloodWithdrawals] ([BloodWithdrawalId], [BloodWithdrawalDate], [TransactionValue], [UnitQuantity], [ClientId]) VALUES (3, '4/22/2020', '805.85', 1, '9');
 INSERT INTO [dbo].[BloodWithdrawals] ([BloodWithdrawalId], [BloodWithdrawalDate], [TransactionValue], [UnitQuantity], [ClientId]) VALUES (4, '9/23/2020', '989.01', 1, '10');
-INSERT INTO [dbo].[BloodWithdrawals] ([BloodWithdrawalId], [BloodWithdrawalDate], [TransactionValue], [UnitQuantity], [ClientId]) VALUES (5, '7/23/2020', '359.73', 2, '2');
-INSERT INTO [dbo].[BloodWithdrawals] ([BloodWithdrawalId], [BloodWithdrawalDate], [TransactionValue], [UnitQuantity], [ClientId]) VALUES (6, '6/8/2020', '421.19', 1, '1');
 INSERT INTO [dbo].[BloodWithdrawals] ([BloodWithdrawalId], [BloodWithdrawalDate], [TransactionValue], [UnitQuantity], [ClientId]) VALUES (7, '4/19/2020', '692.95', 2, '5');
-INSERT INTO [dbo].[BloodWithdrawals] ([BloodWithdrawalId], [BloodWithdrawalDate], [TransactionValue], [UnitQuantity], [ClientId]) VALUES (8, '1/6/2020', '432.94', 2, '4');
-INSERT INTO [dbo].[BloodWithdrawals] ([BloodWithdrawalId], [BloodWithdrawalDate], [TransactionValue], [UnitQuantity], [ClientId]) VALUES (9, '2/23/2020', '954.70', 2, '8');
-INSERT INTO [dbo].[BloodWithdrawals] ([BloodWithdrawalId], [BloodWithdrawalDate], [TransactionValue], [UnitQuantity], [ClientId]) VALUES (10, '5/13/2020', '591.96', 1, '4');
 
 GO
 
@@ -95,10 +90,5 @@ INSERT INTO [dbo].[BloodWithdrawalUnits] ([BloodWithdrawalUnitsId], [UnitId], [B
 INSERT INTO [dbo].[BloodWithdrawalUnits] ([BloodWithdrawalUnitsId], [UnitId], [BloodWithdrawalId]) VALUES (3, '3', '3');
 INSERT INTO [dbo].[BloodWithdrawalUnits] ([BloodWithdrawalUnitsId], [UnitId], [BloodWithdrawalId]) VALUES (4, '2', '4');
 INSERT INTO [dbo].[BloodWithdrawalUnits] ([BloodWithdrawalUnitsId], [UnitId], [BloodWithdrawalId]) VALUES (5, '7', '5');
-INSERT INTO [dbo].[BloodWithdrawalUnits] ([BloodWithdrawalUnitsId], [UnitId], [BloodWithdrawalId]) VALUES (6, '3', '6');
-INSERT INTO [dbo].[BloodWithdrawalUnits] ([BloodWithdrawalUnitsId], [UnitId], [BloodWithdrawalId]) VALUES (7, '7', '7');
-INSERT INTO [dbo].[BloodWithdrawalUnits] ([BloodWithdrawalUnitsId], [UnitId], [BloodWithdrawalId]) VALUES (8, '8', '8');
-INSERT INTO [dbo].[BloodWithdrawalUnits] ([BloodWithdrawalUnitsId], [UnitId], [BloodWithdrawalId]) VALUES (9, '9', '9');
-INSERT INTO [dbo].[BloodWithdrawalUnits] ([BloodWithdrawalUnitsId], [UnitId], [BloodWithdrawalId]) VALUES (10, '10', '10');
 
 GO
