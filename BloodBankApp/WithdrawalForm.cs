@@ -79,7 +79,8 @@ namespace BloodBankApp
             }
 
             // adds to the current balance after a withdrawal
-            this.DialogResult = DialogResult.OK;
+            //this.DialogResult = DialogResult.OK;
+            initializeDepositDGV();
 
             BloodBankAppMainForm.SetFundsBalance += Double.Parse(textBoxTotal.Text);
             ReadCurrentFunds(); // re-reads the current balance
