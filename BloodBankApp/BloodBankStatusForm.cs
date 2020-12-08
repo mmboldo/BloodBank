@@ -23,7 +23,7 @@ namespace BloodBankApp
             initializeDonationDGV();
             initializeWithdrawalDGV();
             initializeBankBalance();
-            textBoxBalance.Text = (Int32.Parse(textBoxWithdrawals.Text) - Int32.Parse(textBoxDeposits.Text)).ToString();
+            textBoxBalance.Text = BloodBankAppMainForm.SetFundsBalance.ToString();
         }
         private void initializeBankBalance()
         {

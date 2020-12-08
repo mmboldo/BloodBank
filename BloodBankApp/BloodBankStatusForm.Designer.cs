@@ -116,15 +116,15 @@
             // Balance
             // 
             this.Balance.AutoSize = true;
-            this.Balance.Location = new System.Drawing.Point(636, 696);
+            this.Balance.Location = new System.Drawing.Point(604, 692);
             this.Balance.Name = "Balance";
-            this.Balance.Size = new System.Drawing.Size(46, 13);
+            this.Balance.Size = new System.Drawing.Size(78, 13);
             this.Balance.TabIndex = 4;
-            this.Balance.Text = "Balance";
+            this.Balance.Text = "Balance (CA$):";
             // 
             // textBoxDeposits
             // 
-            this.textBoxDeposits.Location = new System.Drawing.Point(67, 689);
+            this.textBoxDeposits.Location = new System.Drawing.Point(101, 689);
             this.textBoxDeposits.Name = "textBoxDeposits";
             this.textBoxDeposits.ReadOnly = true;
             this.textBoxDeposits.Size = new System.Drawing.Size(100, 20);
@@ -133,15 +133,15 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(15, 696);
+            this.label4.Location = new System.Drawing.Point(15, 692);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(48, 13);
+            this.label4.Size = new System.Drawing.Size(80, 13);
             this.label4.TabIndex = 4;
-            this.label4.Text = "Deposits";
+            this.label4.Text = "Deposits (CA$):";
             // 
             // textBoxWithdrawals
             // 
-            this.textBoxWithdrawals.Location = new System.Drawing.Point(356, 686);
+            this.textBoxWithdrawals.Location = new System.Drawing.Point(357, 689);
             this.textBoxWithdrawals.Name = "textBoxWithdrawals";
             this.textBoxWithdrawals.ReadOnly = true;
             this.textBoxWithdrawals.Size = new System.Drawing.Size(100, 20);
@@ -150,11 +150,11 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(285, 692);
+            this.label5.Location = new System.Drawing.Point(254, 692);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(65, 13);
+            this.label5.Size = new System.Drawing.Size(97, 13);
             this.label5.TabIndex = 4;
-            this.label5.Text = "Withdrawals";
+            this.label5.Text = "Withdrawals (CA$):";
             // 
             // BloodBankStatusForm
             // 

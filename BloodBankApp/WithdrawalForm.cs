@@ -19,14 +19,19 @@ namespace BloodBankApp
             InitializeComponent();
             this.Load += WithdrawForm_Load;
 
-            button1.Click += ButtonWithdraw_Click;
+            buttonWithdrawBlood.Click += ButtonWithdraw_Click;
             dataGridViewStock.SelectionChanged += (s, e) => GetSelection();
         }
         private void WithdrawForm_Load(object sender, EventArgs e)
         {
             initializeDepositDGV();
             initializeClientDGV();
-            
+            ReadCurrentFunds();
+        }
+
+        private void ReadCurrentFunds()
+        {
+            labelCurrentBalance.Text = BloodBankAppMainForm.SetFundsBalance.ToString() + ",00";
         }
 
         private void ButtonWithdraw_Click(object sender, EventArgs e)
@@ -72,8 +77,10 @@ namespace BloodBankApp
                 MessageBox.Show("Cannot add withdrawal to database");
                 return;
             }
-            this.DialogResult = DialogResult.OK;
-            Close();
+
+            // adds to the current balance after a withdrawal
+            BloodBankAppMainForm.SetFundsBalance += Double.Parse(textBoxTotal.Text);
+            ReadCurrentFunds(); // re-reads the current balance
         }
         //populates price from selected item
         private void GetSelection()

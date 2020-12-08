@@ -43,16 +43,35 @@ namespace BloodBankApp
             buttonBloodBank.Click += (s, e) => AddOrUpdateForm<BloodBankEntities>(null, bbStatForm);
             WithdrawalForm withdraw = new WithdrawalForm();
             buttonWithdrawBlood.Click += (s, e) => AddOrUpdateForm<BloodWithdrawal>(dataGridViewDonorsDatabase, withdraw);
-
+            
+            // Event handlers to add behavior when the form is closed
+            withdraw.FormClosing += new FormClosingEventHandler(Form_FormClosing); // event habndler to refresh the current funds in the main form.
+            buttonMakeDonation.Click += ButtonMakeDonation_Click; // This form was created differently, but the event handlers are similar.
 
             // Getting the current balance
-            initializeBankBalance();
+            ReadCurrentFunds();
 
             //Searching the donor through textboxes
             buttonReset.Click += ButtonReset_Click;
             buttonAddClient.Click += ButtonAddClient_Click;
             buttonReportAndReport.Click += ButtonReportAndReport_Click;
-            buttonMakeDonation.Click += ButtonMakeDonation_Click;
+        }
+
+        // Strings that will contain the selected donor. 
+        // This is to be used to populate the labels in the Make a Donation Form
+        public static string SetMakeADonationFullName = "";
+        public static string SetMakeADonationEmail = "";
+        public static string SetMakeADonationBirthday = "";
+        public static string SetMakeADonationPhoneNumber = "";
+        public static string SetMakeADonationBloodType = "";
+
+        // This variable holds the current balance of funds available to the bank.
+        public static double SetFundsBalance = 5000.0;
+
+        // Reads the Bank's current funds balance and adds it to the label
+        public void ReadCurrentFunds()
+        {
+            labelCurrentFunds.Text = SetFundsBalance.ToString() + ",00";            
         }
 
         // Takes the user to the Report And Report
@@ -68,14 +87,6 @@ namespace BloodBankApp
             AddClientForm addClientForm = new AddClientForm();
             addClientForm.Show();
         }
-
-        // Strings that will contain the selected donor. 
-        // This is to be used to populate the labels in the Make a Donation Form
-        public static string SetMakeADonationFullName = "";
-        public static string SetMakeADonationEmail = "";
-        public static string SetMakeADonationBirthday = "";
-        public static string SetMakeADonationPhoneNumber = "";
-        public static string SetMakeADonationBloodType = "";
 
         // Takes the user to the Make Donation Form
         private void ButtonMakeDonation_Click(object sender, EventArgs e)
@@ -95,7 +106,16 @@ namespace BloodBankApp
             }
             // instantiate the form object and displays it to the user
             MakeDonationForm makeDonationForm = new MakeDonationForm();
+            makeDonationForm.FormClosing += new FormClosingEventHandler(Form_FormClosing);
             makeDonationForm.Show();
+        }
+
+        // This handles the event of closing the form and reloading the current funds value to the labelCurrentFunds label
+        private void Form_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            //when Make a Donation form is closed, this code is executed
+            this.Refresh();
+            ReadCurrentFunds();
         }
 
         // Resets the search fields and the data grid view with the search result
@@ -111,35 +131,6 @@ namespace BloodBankApp
         /// It reads from the contents of Donor and BloodType, instantiates a new DisplayDonor object and adds it to the 
         /// DisplayDonor list. 
         /// </summary>
-        /// 
-
-        public void initializeBankBalance()
-        {
-            List<Donation> donations = Controller<BloodBankEntities, Donation>.SetBindingList().ToList();
-            List<BloodWithdrawal> withdrawals = Controller<BloodBankEntities, BloodWithdrawal>.SetBindingList().ToList();
-            List<BloodType> bloodTypes = Controller<BloodBankEntities, BloodType>.SetBindingList().ToList();
-            decimal depositBalance = 0;
-            decimal withdrawalBalance = 0;
-            foreach (Donation d in donations)
-            {
-                float volume = d.DonationBloodVolume;
-                float ppu = 0;
-                foreach (BloodType b in bloodTypes)
-                {
-                    if (d.BloodTypeId == b.BloodTypeId)
-                    {
-                        ppu = b.PricePerUnit;
-                    }
-                }
-                depositBalance += Decimal.Parse((volume * ppu).ToString());
-            }
-            foreach (BloodWithdrawal b in withdrawals)
-            {
-                withdrawalBalance += Decimal.Parse(b.TransactionValue.ToString());
-            }
-            labelCurrentFunds.Text = (depositBalance - withdrawalBalance).ToString() + ",00";
-        }
-
         private void initializeDonorsDataGridView()
         {                
                 List<DisplayDonor> displayDonor = new List<DisplayDonor>();
@@ -206,7 +197,8 @@ namespace BloodBankApp
                 searchedDonorFirstName = textBoxFirstName.Text;
                 SearchedDonorLastName = textBoxLastName.Text;
                 SearchedDonorBirthday = textBoxDateOfBirth.Text;
-            } catch (Exception ex)
+            } 
+            catch (Exception ex)
             {
                 Debug.WriteLine("ouch! " + ex.Message);
             }
@@ -282,7 +274,6 @@ namespace BloodBankApp
                 // update the gridview
                 initializeDonorsDataGridView();               
             }
-
             form.Hide();
         }
 

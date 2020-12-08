@@ -48,13 +48,13 @@ namespace BloodBankApp
             this.groupBoxSearchDonor = new System.Windows.Forms.GroupBox();
             this.labelDonorDatabase = new System.Windows.Forms.Label();
             this.labelSearchResult = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBoxFunds = new System.Windows.Forms.GroupBox();
             this.labelCurrentFunds = new System.Windows.Forms.Label();
             this.buttonReportAndReport = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewDonorsDatabase)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewSearchResult)).BeginInit();
             this.groupBoxSearchDonor.SuspendLayout();
-            this.groupBox1.SuspendLayout();
+            this.groupBoxFunds.SuspendLayout();
             this.SuspendLayout();
             // 
             // dataGridViewDonorsDatabase
@@ -63,7 +63,7 @@ namespace BloodBankApp
             this.dataGridViewDonorsDatabase.Location = new System.Drawing.Point(22, 37);
             this.dataGridViewDonorsDatabase.Name = "dataGridViewDonorsDatabase";
             this.dataGridViewDonorsDatabase.RowHeadersWidth = 62;
-            this.dataGridViewDonorsDatabase.Size = new System.Drawing.Size(745, 152);
+            this.dataGridViewDonorsDatabase.Size = new System.Drawing.Size(665, 152);
             this.dataGridViewDonorsDatabase.TabIndex = 0;
             // 
             // labelFirstName
@@ -79,7 +79,7 @@ namespace BloodBankApp
             // textBoxFirstName
             // 
             this.textBoxFirstName.Location = new System.Drawing.Point(15, 37);
-            this.textBoxFirstName.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBoxFirstName.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxFirstName.Name = "textBoxFirstName";
             this.textBoxFirstName.Size = new System.Drawing.Size(100, 20);
             this.textBoxFirstName.TabIndex = 2;
@@ -97,7 +97,7 @@ namespace BloodBankApp
             // textBoxLastName
             // 
             this.textBoxLastName.Location = new System.Drawing.Point(128, 37);
-            this.textBoxLastName.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBoxLastName.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxLastName.Name = "textBoxLastName";
             this.textBoxLastName.Size = new System.Drawing.Size(100, 20);
             this.textBoxLastName.TabIndex = 4;
@@ -115,7 +115,7 @@ namespace BloodBankApp
             // textBoxDateOfBirth
             // 
             this.textBoxDateOfBirth.Location = new System.Drawing.Point(241, 37);
-            this.textBoxDateOfBirth.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBoxDateOfBirth.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxDateOfBirth.Name = "textBoxDateOfBirth";
             this.textBoxDateOfBirth.Size = new System.Drawing.Size(100, 20);
             this.textBoxDateOfBirth.TabIndex = 6;
@@ -123,7 +123,7 @@ namespace BloodBankApp
             // buttonSearchDonor
             // 
             this.buttonSearchDonor.Location = new System.Drawing.Point(15, 80);
-            this.buttonSearchDonor.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonSearchDonor.Margin = new System.Windows.Forms.Padding(2);
             this.buttonSearchDonor.Name = "buttonSearchDonor";
             this.buttonSearchDonor.Size = new System.Drawing.Size(81, 25);
             this.buttonSearchDonor.TabIndex = 7;
@@ -134,27 +134,27 @@ namespace BloodBankApp
             // 
             this.dataGridViewSearchResult.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewSearchResult.Location = new System.Drawing.Point(22, 373);
-            this.dataGridViewSearchResult.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dataGridViewSearchResult.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridViewSearchResult.Name = "dataGridViewSearchResult";
             this.dataGridViewSearchResult.RowHeadersWidth = 62;
             this.dataGridViewSearchResult.RowTemplate.Height = 28;
-            this.dataGridViewSearchResult.Size = new System.Drawing.Size(745, 122);
+            this.dataGridViewSearchResult.Size = new System.Drawing.Size(665, 122);
             this.dataGridViewSearchResult.TabIndex = 8;
             // 
             // labelCurrentFundsLabel
             // 
             this.labelCurrentFundsLabel.AutoSize = true;
-            this.labelCurrentFundsLabel.Location = new System.Drawing.Point(5, 37);
+            this.labelCurrentFundsLabel.Location = new System.Drawing.Point(5, 28);
             this.labelCurrentFundsLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelCurrentFundsLabel.Name = "labelCurrentFundsLabel";
-            this.labelCurrentFundsLabel.Size = new System.Drawing.Size(76, 13);
+            this.labelCurrentFundsLabel.Size = new System.Drawing.Size(105, 13);
             this.labelCurrentFundsLabel.TabIndex = 9;
-            this.labelCurrentFundsLabel.Text = "Current Funds:";
+            this.labelCurrentFundsLabel.Text = "Current Funds (CA$):";
             // 
             // buttonMakeDonation
             // 
-            this.buttonMakeDonation.Location = new System.Drawing.Point(113, 514);
-            this.buttonMakeDonation.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonMakeDonation.Location = new System.Drawing.Point(83, 514);
+            this.buttonMakeDonation.Margin = new System.Windows.Forms.Padding(2);
             this.buttonMakeDonation.Name = "buttonMakeDonation";
             this.buttonMakeDonation.Size = new System.Drawing.Size(73, 45);
             this.buttonMakeDonation.TabIndex = 11;
@@ -163,8 +163,8 @@ namespace BloodBankApp
             // 
             // buttonWithdrawBlood
             // 
-            this.buttonWithdrawBlood.Location = new System.Drawing.Point(437, 514);
-            this.buttonWithdrawBlood.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonWithdrawBlood.Location = new System.Drawing.Point(407, 514);
+            this.buttonWithdrawBlood.Margin = new System.Windows.Forms.Padding(2);
             this.buttonWithdrawBlood.Name = "buttonWithdrawBlood";
             this.buttonWithdrawBlood.Size = new System.Drawing.Size(75, 45);
             this.buttonWithdrawBlood.TabIndex = 12;
@@ -173,8 +173,8 @@ namespace BloodBankApp
             // 
             // buttonAddNewDonor
             // 
-            this.buttonAddNewDonor.Location = new System.Drawing.Point(234, 514);
-            this.buttonAddNewDonor.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonAddNewDonor.Location = new System.Drawing.Point(204, 514);
+            this.buttonAddNewDonor.Margin = new System.Windows.Forms.Padding(2);
             this.buttonAddNewDonor.Name = "buttonAddNewDonor";
             this.buttonAddNewDonor.Size = new System.Drawing.Size(62, 45);
             this.buttonAddNewDonor.TabIndex = 13;
@@ -183,18 +183,18 @@ namespace BloodBankApp
             // 
             // buttonBloodBank
             // 
-            this.buttonBloodBank.Location = new System.Drawing.Point(218, 37);
-            this.buttonBloodBank.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonBloodBank.Location = new System.Drawing.Point(165, 68);
+            this.buttonBloodBank.Margin = new System.Windows.Forms.Padding(2);
             this.buttonBloodBank.Name = "buttonBloodBank";
-            this.buttonBloodBank.Size = new System.Drawing.Size(108, 68);
+            this.buttonBloodBank.Size = new System.Drawing.Size(108, 49);
             this.buttonBloodBank.TabIndex = 14;
             this.buttonBloodBank.Text = "Blood Bank";
             this.buttonBloodBank.UseVisualStyleBackColor = true;
             // 
             // buttonAddClient
             // 
-            this.buttonAddClient.Location = new System.Drawing.Point(334, 514);
-            this.buttonAddClient.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonAddClient.Location = new System.Drawing.Point(304, 514);
+            this.buttonAddClient.Margin = new System.Windows.Forms.Padding(2);
             this.buttonAddClient.Name = "buttonAddClient";
             this.buttonAddClient.Size = new System.Drawing.Size(57, 45);
             this.buttonAddClient.TabIndex = 15;
@@ -204,7 +204,7 @@ namespace BloodBankApp
             // buttonReset
             // 
             this.buttonReset.Location = new System.Drawing.Point(128, 80);
-            this.buttonReset.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonReset.Margin = new System.Windows.Forms.Padding(2);
             this.buttonReset.Name = "buttonReset";
             this.buttonReset.Size = new System.Drawing.Size(87, 25);
             this.buttonReset.TabIndex = 16;
@@ -248,23 +248,23 @@ namespace BloodBankApp
             this.labelSearchResult.TabIndex = 19;
             this.labelSearchResult.Text = "Search Result";
             // 
-            // groupBox1
+            // groupBoxFunds
             // 
-            this.groupBox1.Controls.Add(this.labelCurrentFunds);
-            this.groupBox1.Controls.Add(this.labelCurrentFundsLabel);
-            this.groupBox1.Controls.Add(this.buttonBloodBank);
-            this.groupBox1.Location = new System.Drawing.Point(397, 211);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(370, 129);
-            this.groupBox1.TabIndex = 20;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Funds";
+            this.groupBoxFunds.Controls.Add(this.labelCurrentFunds);
+            this.groupBoxFunds.Controls.Add(this.labelCurrentFundsLabel);
+            this.groupBoxFunds.Controls.Add(this.buttonBloodBank);
+            this.groupBoxFunds.Location = new System.Drawing.Point(397, 211);
+            this.groupBoxFunds.Name = "groupBoxFunds";
+            this.groupBoxFunds.Size = new System.Drawing.Size(290, 129);
+            this.groupBoxFunds.TabIndex = 20;
+            this.groupBoxFunds.TabStop = false;
+            this.groupBoxFunds.Text = "Financial Data";
             // 
             // labelCurrentFunds
             // 
             this.labelCurrentFunds.AutoSize = true;
             this.labelCurrentFunds.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.labelCurrentFunds.Location = new System.Drawing.Point(86, 37);
+            this.labelCurrentFunds.Location = new System.Drawing.Point(107, 28);
             this.labelCurrentFunds.MaximumSize = new System.Drawing.Size(80, 0);
             this.labelCurrentFunds.MinimumSize = new System.Drawing.Size(80, 0);
             this.labelCurrentFunds.Name = "labelCurrentFunds";
@@ -273,8 +273,8 @@ namespace BloodBankApp
             // 
             // buttonReportAndReport
             // 
-            this.buttonReportAndReport.Location = new System.Drawing.Point(573, 514);
-            this.buttonReportAndReport.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonReportAndReport.Location = new System.Drawing.Point(543, 514);
+            this.buttonReportAndReport.Margin = new System.Windows.Forms.Padding(2);
             this.buttonReportAndReport.Name = "buttonReportAndReport";
             this.buttonReportAndReport.Size = new System.Drawing.Size(94, 45);
             this.buttonReportAndReport.TabIndex = 21;
@@ -286,9 +286,9 @@ namespace BloodBankApp
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(789, 647);
+            this.ClientSize = new System.Drawing.Size(722, 591);
             this.Controls.Add(this.buttonReportAndReport);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.groupBoxFunds);
             this.Controls.Add(this.labelSearchResult);
             this.Controls.Add(this.labelDonorDatabase);
             this.Controls.Add(this.buttonAddClient);
@@ -304,8 +304,8 @@ namespace BloodBankApp
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewSearchResult)).EndInit();
             this.groupBoxSearchDonor.ResumeLayout(false);
             this.groupBoxSearchDonor.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.groupBoxFunds.ResumeLayout(false);
+            this.groupBoxFunds.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -331,7 +331,7 @@ namespace BloodBankApp
         private System.Windows.Forms.GroupBox groupBoxSearchDonor;
         private System.Windows.Forms.Label labelDonorDatabase;
         private System.Windows.Forms.Label labelSearchResult;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox groupBoxFunds;
         private System.Windows.Forms.Label labelCurrentFunds;
         private System.Windows.Forms.Button buttonReportAndReport;
     }

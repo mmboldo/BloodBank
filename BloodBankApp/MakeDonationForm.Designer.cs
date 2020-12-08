@@ -51,8 +51,8 @@ namespace BloodBankApp
             this.labelTotalDonationPriceLabel = new System.Windows.Forms.Label();
             this.labelPricePerUnitLabel = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.labelCurrentBalance = new System.Windows.Forms.Label();
             this.labelCurrentBalanceLabel = new System.Windows.Forms.Label();
+            this.labelCurrentBalance = new System.Windows.Forms.Label();
             this.groupBoxDonorInformation.SuspendLayout();
             this.groupBoxDonationInformation.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -184,7 +184,7 @@ namespace BloodBankApp
             // 
             // buttonBackToMain
             // 
-            this.buttonBackToMain.Location = new System.Drawing.Point(12, 561);
+            this.buttonBackToMain.Location = new System.Drawing.Point(17, 169);
             this.buttonBackToMain.Name = "buttonBackToMain";
             this.buttonBackToMain.Size = new System.Drawing.Size(75, 36);
             this.buttonBackToMain.TabIndex = 2;
@@ -211,6 +211,7 @@ namespace BloodBankApp
             // 
             this.groupBoxDonationInformation.Controls.Add(this.buttonCalculateTotal);
             this.groupBoxDonationInformation.Controls.Add(this.labelTotalDonationPrice);
+            this.groupBoxDonationInformation.Controls.Add(this.buttonBackToMain);
             this.groupBoxDonationInformation.Controls.Add(this.labelBloodTypePrice);
             this.groupBoxDonationInformation.Controls.Add(this.labelTotalDonationPriceLabel);
             this.groupBoxDonationInformation.Controls.Add(this.labelPricePerUnitLabel);
@@ -282,6 +283,15 @@ namespace BloodBankApp
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Current Balance";
             // 
+            // labelCurrentBalanceLabel
+            // 
+            this.labelCurrentBalanceLabel.AutoSize = true;
+            this.labelCurrentBalanceLabel.Location = new System.Drawing.Point(7, 16);
+            this.labelCurrentBalanceLabel.Name = "labelCurrentBalanceLabel";
+            this.labelCurrentBalanceLabel.Size = new System.Drawing.Size(23, 13);
+            this.labelCurrentBalanceLabel.TabIndex = 1;
+            this.labelCurrentBalanceLabel.Text = "C$:";
+            // 
             // labelCurrentBalance
             // 
             this.labelCurrentBalance.AutoSize = true;
@@ -292,23 +302,13 @@ namespace BloodBankApp
             this.labelCurrentBalance.Size = new System.Drawing.Size(70, 15);
             this.labelCurrentBalance.TabIndex = 0;
             // 
-            // labelCurrentBalanceLabel
-            // 
-            this.labelCurrentBalanceLabel.AutoSize = true;
-            this.labelCurrentBalanceLabel.Location = new System.Drawing.Point(7, 16);
-            this.labelCurrentBalanceLabel.Name = "labelCurrentBalanceLabel";
-            this.labelCurrentBalanceLabel.Size = new System.Drawing.Size(23, 13);
-            this.labelCurrentBalanceLabel.TabIndex = 1;
-            this.labelCurrentBalanceLabel.Text = "C$:";
-            // 
             // MakeDonationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(350, 609);
+            this.ClientSize = new System.Drawing.Size(350, 485);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupBoxDonationInformation);
-            this.Controls.Add(this.buttonBackToMain);
             this.Controls.Add(this.groupBoxDonorInformation);
             this.Name = "MakeDonationForm";
             this.Text = "Make a donation";

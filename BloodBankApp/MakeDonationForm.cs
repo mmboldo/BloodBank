@@ -18,7 +18,6 @@ namespace BloodBankApp
         {
             InitializeComponent();
             this.Load += (s, e) => MakeDoationForm_Load();
-            //labelTotalDonationPrice.TextChanged += (s, e) => TextBoxDonatedBloodVolume_TextChanged();
         }
 
         private void MakeDoationForm_Load()
@@ -30,13 +29,12 @@ namespace BloodBankApp
             labelPhoneNumber.Text = BloodBankAppMainForm.SetMakeADonationPhoneNumber;
             labelBloodType.Text = BloodBankAppMainForm.SetMakeADonationBloodType;
             labelBloodTypePrice.Text = Math.Round(GetBloodTypePrice(BloodBankAppMainForm.SetMakeADonationBloodType), 2).ToString() + ",00";
-            initializeBankBalance();
+            ReadCurrentFunds();
 
-            buttonCalculateTotal.Click += ButtonCalculateTotal_click;
-
-            BloodBankAppMainForm main = new BloodBankAppMainForm();
-            this.FormClosed += (s, e) => main.initializeBankBalance();
-
+            // Adding the button click events
+            buttonCalculateTotal.Click += ButtonCalculateTotal_Click;
+            buttonAddToBloodBank.Click += ButtonAddToBloodBank_Click;
+            buttonBackToMain.Click += ButtonBackToMain_Click;
         }
 
         // Gets the Blood type price to populate the label
@@ -52,7 +50,7 @@ namespace BloodBankApp
         }
 
         // Calculate button click event: calculates the donation monetary value based on the donated blood volume and the price per ml of the blood type
-        private void ButtonCalculateTotal_click(object sender, EventArgs e)
+        private void ButtonCalculateTotal_Click(object sender, EventArgs e)
         {
             double donatedVolume = 0.0;
             Double.TryParse(textBoxDonatedBloodVolume.Text, out donatedVolume);
@@ -60,31 +58,32 @@ namespace BloodBankApp
             labelTotalDonationPrice.Text = (donatedVolume * pricePerUnit / 500).ToString();
         }
 
-        private void initializeBankBalance()
+        // it reads from a double variable contained in the Main Form and populates the Current Balance label
+        private void ReadCurrentFunds()
         {
-            List<Donation> donations = Controller<BloodBankEntities, Donation>.SetBindingList().ToList();
-            List<BloodWithdrawal> withdrawals = Controller<BloodBankEntities, BloodWithdrawal>.SetBindingList().ToList();
-            List<BloodType> bloodTypes = Controller<BloodBankEntities, BloodType>.SetBindingList().ToList();
-            decimal depositBalance = 0;
-            decimal withdrawalBalance = 0;
-            foreach (Donation d in donations)
-            {
-                float volume = d.DonationBloodVolume;
-                float ppu = 0;
-                foreach (BloodType b in bloodTypes)
-                {
-                    if (d.BloodTypeId == b.BloodTypeId)
-                    {
-                        ppu = b.PricePerUnit;
-                    }
-                }
-                depositBalance += Decimal.Parse((volume * ppu).ToString());
+            labelCurrentBalance.Text = BloodBankAppMainForm.SetFundsBalance.ToString();
+        }
+
+        private void ButtonAddToBloodBank_Click(object sender, EventArgs e)
+        {
+            double value;
+            // first try if there is any value
+            if (Double.TryParse(labelTotalDonationPrice.Text, out value)){
+                BloodBankAppMainForm.SetFundsBalance -= value;
             }
-            foreach (BloodWithdrawal b in withdrawals)
+            else
             {
-                withdrawalBalance += Decimal.Parse(b.TransactionValue.ToString());
+                MessageBox.Show("Nothing to add. Please calculate the total donation value and try again.");
             }
-            labelCurrentBalance.Text = (depositBalance - withdrawalBalance).ToString();            
+            //BloodBankAppMainForm.SetFundsBalance -= Int32.Parse(labelTotalDonationPrice.Text);
+            // then calculated and change the value of the current funds            
+            ReadCurrentFunds();
+        }
+
+        // The form can be closed by clicking on either this button or the red X
+        private void ButtonBackToMain_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }
